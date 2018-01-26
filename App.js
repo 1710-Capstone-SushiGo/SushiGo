@@ -1,23 +1,43 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StackNavigator } from 'react-navigation'
+import StartMenu from './components/StartMenu'
+import JoinGame from './components/JoinGame'
+import CreateGame from './components/CreateGame'
+import HowToPlay from './components/HowToPlay'
+import Lobby from './components/Lobby'
+import OnLoad from './components/OnLoad'
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+export default RootNavigator = StackNavigator({
+  Main: {
+    screen: OnLoad
   },
+  StartMenu: {
+    screen: StartMenu,
+    navigationOptions: {
+      headerTitle: 'Sushi Go!',
+    }
+  },
+  JoinGame: {
+    screen: JoinGame,
+    navigationOptions: {
+      headerTitle: 'Join Game'
+    }
+  },
+  CreateGame: {
+    screen: CreateGame,
+    navigationOptions: {
+      headerTitle: 'Create Game'
+    }
+  },
+  HowToPlay: {
+    screen: HowToPlay,
+    navigationOptions: {
+      headerTitle: 'How To Play'
+    }
+  },
+  Lobby: {
+    screen: Lobby,
+    navigationOptions: {
+      headerTitle: 'Lobby'
+    }
+  }
 });
