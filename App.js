@@ -4,9 +4,13 @@ import JoinGame from './components/JoinGame'
 import CreateGame from './components/CreateGame'
 import HowToPlay from './components/HowToPlay'
 import Lobby from './components/Lobby'
+import OnLoad from './components/OnLoad'
 
 export default RootNavigator = StackNavigator({
   Main: {
+    screen: OnLoad
+  },
+  StartMenu: {
     screen: StartMenu,
     navigationOptions: {
       headerTitle: 'Sushi Go!',

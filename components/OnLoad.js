@@ -1,7 +1,13 @@
 import React from 'react';
 import { AppRegistry, StyleSheet, Image, Text, View, Alert } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 
 export default class OnLoad extends React.Component {
+
+    static navigationOptions = {
+        header: null
+    }
+
     constructor(props) {
         super(props);
         this.state = { showText: true };
@@ -13,18 +19,15 @@ export default class OnLoad extends React.Component {
             500);
     }
 
-    handlePress() {
-        Alert.alert("I'm your daddy")
-    }
-    render() {
+    render(navigation) {
         let display = this.state.showText ? this.props.text : 'Press Anywhere To Start';
         return (
             <View style={styles.container}
-                onResponderGrant={() => this.handlePress()}
+                onResponderGrant={() => this.props.navigation.navigate('StartMenu')}
                 onStartShouldSetResponder={(e) => { return true }}
             >
                 <Text style={{ fontSize: 40, color: '#841584' }}>Sushi GO!</Text>
-                <Image source={require('./public/img/sushi.png')} style={{ resizeMode: 'center', flex: 0.6 }} />
+                <Image source={require('../public/img/sushi.png')} style={{ resizeMode: 'center', flex: 0.6 }} />
                 <Text style={{ fontSize: 20, color: 'white' }} > {display}</Text>
             </View >
         );
