@@ -19,10 +19,23 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.1",
+    "connect-session-sequelize": "^5.1.0",
+    "crypto": "^1.0.1",
     "expo": "^23.0.4",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "lodash": "^4.17.4",
+    "passport": "^0.4.0",
+    "pg": "^7.4.1",
     "react": "16.2.0",
     "react-native": "0.52.0",
     "react-native-draggable": "^1.0.12",
-    "react-navigation": "^1.0.0-beta.27"
+    "react-navigation": "^1.0.0-beta.27",
+    "redux-socket.io-middleware": "^1.0.4",
+    "sequelize": "^4.32.2",
+    "socket.io": "^2.0.4",
+    "volleyball": "^1.4.1"
   }
 }
