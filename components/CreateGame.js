@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-const CreateGame = () => (
+const CreateGame = ({navigation}) => (
     <View style={styles.container}>
         <Text>This is my CreateGame Component!</Text>
         <Button
