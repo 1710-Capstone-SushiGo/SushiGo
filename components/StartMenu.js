@@ -16,6 +16,10 @@ const StartMenu = ({ navigation }) => (
 			onPress={() => navigation.navigate('HowToPlay')}
 			title="How To Play"
 		/>
+		<Button
+			onPress={() => navigation.navigate('GameRoom')}
+			title="Test Game Room"
+		/>
 	</View>
 );
 
