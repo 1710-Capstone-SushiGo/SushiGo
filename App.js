@@ -1,11 +1,11 @@
 import { StackNavigator } from 'react-navigation'
-import StartMenu from './components/StartMenu'
-import JoinGame from './components/JoinGame'
-import CreateGame from './components/CreateGame'
-import HowToPlay from './components/HowToPlay'
-import Lobby from './components/Lobby'
-import OnLoad from './components/OnLoad'
-import GameRoom from './components/GameRoom'
+import StartMenu from './client/components/StartMenu'
+import JoinGame from './client/components/JoinGame'
+import CreateGame from './client/components/CreateGame'
+import HowToPlay from './client/components/HowToPlay'
+import Lobby from './client/components/Lobby'
+import OnLoad from './client/components/OnLoad'
+import GameRoom from './client/components/GameRoom'
 
 export default RootNavigator = StackNavigator({
   Main: {
