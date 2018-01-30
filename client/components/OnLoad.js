@@ -27,7 +27,7 @@ export default class OnLoad extends React.Component {
                 onStartShouldSetResponder={(e) => { return true }}
             >
                 <Text style={{ fontSize: 40, color: '#841584' }}>Sushi GO!</Text>
-                <Image source={require('../public/img/sushi.png')} style={{ resizeMode: 'center', flex: 0.6 }} />
+                <Image source={require('../../public/img/sushi.png')} style={{ resizeMode: 'center', flex: 0.6 }} />
                 <Text style={{ fontSize: 20, color: 'white' }} > {display}</Text>
             </View >
         );

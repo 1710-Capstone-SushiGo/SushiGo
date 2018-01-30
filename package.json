@@ -36,6 +36,7 @@
     "redux-socket.io-middleware": "^1.0.4",
     "sequelize": "^4.32.2",
     "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4",
     "volleyball": "^1.4.1"
   }
 }

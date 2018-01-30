@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, PanResponder, Animated, Image } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import target from '../public/img/target.png';
+import target from '../../public/img/target.png';
+import SocketIOClient from 'socket.io-client';
 
 
 class Draggable extends Component {
@@ -14,6 +15,8 @@ class Draggable extends Component {
       pan: new Animated.ValueXY(),
       opacity: new Animated.Value(1)
     };
+    this.socket = SocketIOClient('http://localhost:3000')
+    this.socket.on('connection', () => console.log('connected'))
   }
 
   componentWillMount() {
@@ -79,7 +82,7 @@ class Draggable extends Component {
 }
 
 
-export default class App extends Component {
+export default class GameRoom extends Component {
   render() {
     return (
       <View style={styles.mainContainer}>
@@ -88,10 +91,6 @@ export default class App extends Component {
         </View>
         <View style={styles.ballContainer} />
         <View style={styles.row}>
-          <Draggable />
-          <Draggable />
-          <Draggable />
-          <Draggable />
           <Draggable />
         </View>
       </View>
