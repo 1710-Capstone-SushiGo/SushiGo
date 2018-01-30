@@ -26,8 +26,15 @@ export default class OnLoad extends React.Component {
                 onResponderGrant={() => this.props.navigation.navigate('StartMenu')}
                 onStartShouldSetResponder={(e) => { return true }}
             >
-                <Text style={{ fontSize: 40, color: '#841584' }}>Sushi GO!</Text>
-                <Image source={require('../../public/img/sushi.png')} style={{ resizeMode: 'center', flex: 0.6 }} />
+                {/* <Text style={{ fontSize: 40, color: '#841584' }}>Sushi GO!</Text> */}
+                <Image source={require('../../public/img/logo.png')} style={{ resizeMode: 'center', flex: 0.8, top: -5, width: 180, height: 100 }} />
+
+                <View style={{ flexDirection: 'row', width:1000, height:160 }}>
+                    <Image source={require('../../public/img/sushi/salmonnigiri.png')} style={{ width: 180, height: 140, marginLeft: 50 }}/>
+                    <Image source={require('../../public/img/sushi/Chopsticks.png')} style={{ flex: 0.2, width: 180, height: 140, marginLeft: 50 }}/>
+                    <Image source={require('../../public/img/sushi/salmonnigiri.png')} style={{ width: 180, height: 140, marginLeft: 50 }}/>
+                </View>
+
                 <Text style={{ fontSize: 20, color: 'white' }} > {display}</Text>
             </View >
         );
@@ -37,7 +44,7 @@ export default class OnLoad extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#e8df40',
+        backgroundColor: '#213F99',
         alignItems: 'center',
         justifyContent: 'center'
     },
