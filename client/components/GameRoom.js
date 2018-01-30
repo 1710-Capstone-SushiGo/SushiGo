@@ -5,9 +5,18 @@ import target from '../../public/img/target.png';
 import SocketIOClient from 'socket.io-client';
 import Orientation from 'react-native-orientation';
 import Draggable from './Draggable'
+import sushi from '../../public/img/sushi.png'
 
 export default class GameRoom extends Component {
+  constructor(){
+    super()
+
+    this.state = {
+      imageArray: [target, sushi]
+    }
+  }
   render() {
+    let idx = 0
     return (
       <View style={styles.mainContainer}>
         <View style={styles.dropZone}>
@@ -15,7 +24,14 @@ export default class GameRoom extends Component {
         </View>
         <View style={styles.ballContainer} />
         <View style={styles.row}>
-          <Draggable />
+          {this.state.imageArray.map(elem => {
+            idx++
+            return (
+              <View key={idx}>
+                {<Draggable img={elem}/>}
+              </View>
+            )
+          })}
         </View>
       </View>
     );
