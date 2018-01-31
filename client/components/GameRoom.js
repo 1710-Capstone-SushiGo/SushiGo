@@ -1,38 +1,38 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, PanResponder, Animated, Image } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import target from '../../public/img/target.png';
-import SocketIOClient from 'socket.io-client';
+import pudding from '../../public/img/cards/pudding.png';
+import io from 'socket.io-client/dist/socket.io'
 import Orientation from 'react-native-orientation';
 import Draggable from './Draggable'
-import sushi from '../../public/img/sushi.png'
+import dumpling from '../../public/img/cards/dumpling.png'
 
 export default class GameRoom extends Component {
   constructor(){
     super()
 
     this.state = {
-      imageArray: [target, sushi]
+      imageArray: [pudding, dumpling]
     }
+    this.socket = io('http://localhost:3000')
+    this.socket.on('connection', () => console.log('connected'))
+
   }
   render() {
     let idx = 0
     return (
-      <View style={styles.mainContainer}>
+      <View>
         <View style={styles.dropZone}>
           <Text style={styles.text}>Drop them here!</Text>
         </View>
-        <View style={styles.ballContainer} />
-        <View style={styles.row}>
-          {this.state.imageArray.map(elem => {
-            idx++
-            return (
-              <View key={idx}>
-                {<Draggable img={elem}/>}
-              </View>
-            )
-          })}
-        </View>
+        {this.state.imageArray.map(elem => {
+          idx++
+          return (
+            <View key={idx} style={styles.row}>
+              {<Draggable img={elem} socket={this.socket}/>}
+            </View>
+          )
+        })}
       </View>
     );
   }
@@ -41,7 +41,7 @@ export default class GameRoom extends Component {
 let CIRCLE_RADIUS = 30;
 const styles = StyleSheet.create({
   mainContainer: {
-    flex: 1
+    display: 'flex'
   },
   ballContainer: {
     height:200
@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     borderRadius: CIRCLE_RADIUS
   },
   row: {
+    flex: 1,
     flexDirection: "row"
   },  
   dropZone: {
