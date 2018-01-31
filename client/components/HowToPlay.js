@@ -1,33 +1,43 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import store, { playCard } from '../store/users'
+import store, { playCard, getCurrentUser } from '../store/users'
 
 export default class HowToPlay extends Component {
   constructor() {
     super()
     this.state = store.getState();
 
-    this.playCard = this.playCard.bind(this);
+    this.getCurrentUser = this.getCurrentUser.bind(this);
   }
   componentDidMount() {
-    this.unsubscribe = store.subscribe(() => this.setState(store.getState()))
+    console.log('component mounted')
+    this.unsubscribe = store.subscribe(() => {
+      console.log('hello world!!')
+      this.setState(store.getState())
+
+    })
+    { this.getCurrentUser('666') }
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log('proppppppppps', nextProps);
   }
   componentWillUnmount() {
     this.unsubscribe()
   }
 
-  playCard(card) {
-    store.dispatch(playCard(card))
+  getCurrentUser(socketId) {
+    store.dispatch(getCurrentUser(socketId))
   }
 
   render() {
-    console.log(this.state)
+    console.log('rendering');
     return (
       <View style={styles.container}>
-        {this.playCard('maki1')}
+
+        {console.log('UPDATEDD ----------------', this.state)}
         <Text>This is my HowToPlay Component!</Text>
-        <Text>{console.log(this.state)}</Text>
+        {/* <Text>{console.log(this.getCurrentUser('666'))}</Text> */}
       </View>
     )
   }
