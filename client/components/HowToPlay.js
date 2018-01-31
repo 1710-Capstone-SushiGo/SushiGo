@@ -1,37 +1,36 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import store, {keepCard} from '../Store/users'
+import store, { playCard } from '../store/users'
 
 export default class HowToPlay extends Component {
-  constructor(){
+  constructor() {
     super()
     this.state = store.getState();
 
-    this.getKeepCard = this.getKeepCard.bind(this);
+    this.playCard = this.playCard.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
     this.unsubscribe = store.subscribe(() => this.setState(store.getState()))
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.unsubscribe()
   }
 
-  getKeepCard(card){
-    const action = keepCard(card)
-      store.dispatch(action)
+  playCard(card) {
+    store.dispatch(playCard(card))
   }
-  
-  render(){
+
+  render() {
     console.log(this.state)
     return (
       <View style={styles.container}>
-      {this.getKeepCard('eggNigri')}
+        {this.playCard('maki1')}
         <Text>This is my HowToPlay Component!</Text>
         <Text>{console.log(this.state)}</Text>
       </View>
     )
-  } 
+  }
 };
 
 const styles = StyleSheet.create({
