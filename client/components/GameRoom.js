@@ -11,10 +11,22 @@ import pudding from '../../public/img/cardViews/pudding.png';
 
 export default class GameRoom extends Component {
 
+  
   constructor(){
     super()
     this.state = {
+      hand: [pudding, chopsticks, pudding, chopsticks, pudding, chopsticks, pudding],
+      selectedCard: ''
+    }
 
+    this.socket = io('http://localhost:3000')
+    this.socket.on('connection', () => console.log('connected'))
+  }
+
+  handleSelect = async (image) => {
+    await this.setState({selectedCard: image})
+  }
+  
   render() {
     let idx = 0
     return (
