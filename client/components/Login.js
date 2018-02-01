@@ -17,13 +17,19 @@ class AuthForm extends React.Component {
       password: ''
     }
   }
+  
   render() {
+    const handleSubmit = this.props.handleSubmit
     return (
-      <View style={{width:'80%'}}>
-        <FormLabel>Email</FormLabel>
-        <FormInput onChangeText={(text)=>this.setState({email: text})}style={{backgroundColor: 'blue'}}/>
-        <FormLabel>Password</FormLabel>
-        <FormInput style={{backgroundColor: 'blue'}}/>
+      <View style={{width: '75%', alignItems: 'center'}}>
+          <FormLabel>Email</FormLabel>
+          <FormInput onChangeText={(text)=>this.setState({email: text.toLowerCase()})} />
+          <FormLabel>Password</FormLabel>
+          <FormInput secureTextEntry={true} onChangeText={(text)=>this.setState({password: text})} />
+          <Button 
+            title="Login"
+            onPress={() => handleSubmit(this.state.email, this.state.password, 'login')}
+          />
       </View>
     )
   }
@@ -55,11 +61,7 @@ const mapSignup = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleSubmit (evt) {
-      evt.preventDefault()
-      const formName = evt.target.name
-      const email = evt.target.email.value
-      const password = evt.target.password.value
+    handleSubmit (email, password, formName) {
       dispatch(auth(email, password, formName))
     }
   }

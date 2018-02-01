@@ -25,23 +25,27 @@ class GameRoom extends Component {
   
   constructor(){
     super()
-    this.state = {images: {
-      chopsticks,
-      dumpling,
-      egg,
-      makiOne,
-      makiTwo,
-      makiThree,
-      pudding,
-      salmon,
-      sashimi,
-      squid,
-      tempura,
-      wasabi
-    }}
+    this.state = {
+      images: {
+        chopsticks,
+        dumpling,
+        egg,
+        makiOne,
+        makiTwo,
+        makiThree,
+        pudding,
+        salmon,
+        sashimi,
+        squid,
+        tempura,
+        wasabi
+      },
+      selectedCard: ''
+    }
 
     this.socket = io('http://localhost:3000')
-    this.socket.on('connection', () => console.log('connected'))
+    this.socket.on('sendhelp', (msg) => console.log(msg))
+    this.socket.emit('help', 'help requested')
   }
 
   componentDidMount() {
@@ -80,7 +84,7 @@ class GameRoom extends Component {
         }
         <Button 
           onPress={() => {
-            this.props.playCardDispatch('666', this.state.selectedCard)
+            if (this.state.selectedCard!== '') this.props.playCardDispatch('666', this.state.selectedCard)
             this.setState({selectedCard: ''})
           }}
           title="Play Card"
