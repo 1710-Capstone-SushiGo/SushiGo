@@ -18,27 +18,7 @@ class HowToPlay extends Component {
   constructor(props) {
     super(props)
     this.state = {}
-    // this.getCurrentUser = this.getCurrentUser.bind(this);
-    // this.playCard = this.playCard.bind(this);
-  }
-  // componentDidMount() {
-  //     this.unsubscribe = store.subscribe(() => {
-  //     this.setState(store.getState())
-  //   })
-  //   { this.getCurrentUser('666') }
-  // }
-  // componentWillUnmount() {
-  //   this.unsubscribe()
-  // }
-
-  // getCurrentUser(socketId) {
-  //   store.dispatch(getCurrentUser(socketId))
-  // }
-
-  // playCard(socketId, card) {
-  //   store.dispatch(playCard(socketId, card))
-  // }
-
+}
   render() {
     return (
       <View style={styles.container}>
