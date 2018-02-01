@@ -14,8 +14,6 @@ export default class Draggable extends Component {
       pan: new Animated.ValueXY(),
       opacity: new Animated.Value(1)
     };
-    this.socket = SocketIOClient('http://localhost:3000')
-    this.socket.on('connection', () => console.log('connected'))
   }
 
   componentWillMount() {

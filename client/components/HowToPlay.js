@@ -41,27 +41,25 @@ class HowToPlay extends Component {
 
   render() {
     return (
-      <Provider store={store}>
       <View style={styles.container}>
         <Button 
           onPress={() => {
-            this.props.getCurrentUserDispatch('666')
-            console.log(this.state)
+            this.props.playCardDispatch('666', 'chopsticks')
+            console.log(this.props.users)
           }}
           title="Press me"
         />
         <Text>This is my HowToPlay Component!</Text>
-        {/* <Text>{console.log(this.getCurrentUser('666'))}</Text> */}
       </View>
-      </Provider>
     )
   }
 };
 
 const mapState = state => {
   return {
-    users: state.users,
-    currentUser: state.currentUser
+    users: state.users.all,
+    currentUser: state.current
+
   }
 }
 

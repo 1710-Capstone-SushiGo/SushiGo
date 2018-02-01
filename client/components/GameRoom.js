@@ -14,7 +14,10 @@ export default class GameRoom extends Component {
     this.state = {
       imageArray: [target, sushi]
     }
+    this.socket = SocketIOClient('http://localhost:3000')
+    this.socket.on('connection', () => console.log('connected'))
   }
+  
   render() {
     let idx = 0
     return (
