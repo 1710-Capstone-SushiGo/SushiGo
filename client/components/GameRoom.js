@@ -1,38 +1,60 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, PanResponder, Animated, Image } from 'react-native';
+import { StyleSheet, Text, View, PanResponder, Animated, TouchableOpacity, Image } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import pudding from '../../public/img/cards/pudding.png';
+
 import io from 'socket.io-client/dist/socket.io'
 import Orientation from 'react-native-orientation';
 import Draggable from './Draggable'
-import dumpling from '../../public/img/cards/dumpling.png'
+import userAvatar from '../../public/img/userAvatar.png'
+import chopsticks from '../../public/img/cardViews/chopsticks.png'
+import pudding from '../../public/img/cardViews/pudding.png';
 
 export default class GameRoom extends Component {
+
+  
   constructor(){
     super()
-
     this.state = {
-      imageArray: [pudding, dumpling]
+      hand: [pudding, chopsticks, pudding, chopsticks, pudding, chopsticks, pudding],
+      selectedCard: ''
     }
+
     this.socket = io('http://localhost:3000')
     this.socket.on('connection', () => console.log('connected'))
-
   }
+
+  handleSelect = async (image) => {
+    await this.setState({selectedCard: image})
+  }
+  
   render() {
     let idx = 0
     return (
-      <View>
-        <View style={styles.dropZone}>
-          <Text style={styles.text}>Drop them here!</Text>
+
+      <View style={{height:'100%', flexDirection: 'column', justifyContent: 'space-between', alignItems:'center', backgroundColor: '#213F99'}}>
+        
+        <View style={{flexDirection:'row', justifyContent: 'space-between',width:'40%'}}>
+          <Image source={userAvatar} style={{height:50, width:50, margin:10}} />
+          <Image source={userAvatar} style={{height:50, width:50, margin:10}} />
         </View>
-        {this.state.imageArray.map(elem => {
-          idx++
-          return (
-            <View key={idx} style={styles.row}>
-              {<Draggable img={elem} socket={this.socket}/>}
-            </View>
-          )
-        })}
+        <View style={{flexDirection:'row', justifyContent: 'space-between',width:'90%'}}>
+          <Image source={userAvatar} style={{height:50, width:50, margin:10}} />
+          <Image source={userAvatar} style={{height:50, width:50, margin:10}} />
+        </View>
+       <View style={{flexDirection: 'row', margin: 5}}>
+        {
+          this.state.hand.map((image) => {
+            idx++
+            return (
+              <View key={idx} style={{}}>
+                <TouchableOpacity style={{height:75, width:40, margin:5}} onPress={() => this.handleSelect.call(this, image)}>
+                  <Image source={image} style={{height:75, width:40, margin:5}}/>
+                </TouchableOpacity>
+              </View>
+            )
+          })
+        }
+       </View>
       </View>
     );
   }
