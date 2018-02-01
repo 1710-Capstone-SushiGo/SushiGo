@@ -6,7 +6,19 @@ import {connect} from 'react-redux';
 import io from 'socket.io-client/dist/socket.io'
 import Orientation from 'react-native-orientation';
 import Draggable from './Draggable'
-import userAvatar from '../../public/img/userAvatar.png'
+import userAvatar from '../../public/img/userAvatar.png';
+import chopsticks from '../../public/img/cardViews/chopsticks.png';
+import dumpling from '../../public/img/cardViews/dumpling.png';
+import egg from '../../public/img/cardViews/egg.png';
+import maki1 from '../../public/img/cardViews/maki1.png';
+import maki2 from '../../public/img/cardViews/maki2.png';
+import maki3 from '../../public/img/cardViews/maki3.png';
+import pudding from '../../public/img/cardViews/pudding.png';
+import salmon from '../../public/img/cardViews/salmon.png';
+import sashimi from '../../public/img/cardViews/sashimi.png';
+import squid from '../../public/img/cardViews/squid.png';
+import tempura from '../../public/img/cardViews/tempura.png';
+import wasabi from '../../public/img/cardViews/wasabi.png';
 
 class GameRoom extends Component {
 
@@ -14,18 +26,18 @@ class GameRoom extends Component {
   constructor(){
     super()
     this.state = {images: {
-      chopsticks: '../../public/img/cardViews/chopsticks.png',
-      dumpling: '../../public/img/cardViews/dumpling.png',
-      egg: '../../public/img/cardViews/egg.png',
-      maki1: '../../public/img/cardViews/maki1.png',
-      maki2: '../../public/img/cardViews/maki2.png',
-      maki3: '../../public/img/cardViews/maki3.png',
-      pudding: '../../public/img/cardViews/pudding.png',
-      salmon: '../../public/img/cardViews/salmon.png',
-      sashimi: '../../public/img/cardViews/sashimi.png',
-      squid: '../../public/img/cardViews/squid.png',
-      tempura: '../../public/img/cardViews/tempura.png',
-      wasabi: '../../public/img/cardViews/wasabi.png',
+      chopsticks,
+      dumpling,
+      egg,
+      maki1,
+      maki2,
+      maki3,
+      pudding,
+      salmon,
+      sashimi,
+      squid,
+      tempura,
+      wasabi
     }}
 
     this.socket = io('http://localhost:3000')
@@ -57,11 +69,11 @@ class GameRoom extends Component {
         {
           this.props.currentUser.hand && this.props.currentUser.hand.map((image) => {
             idx++
+            console.log('----------------', image)
             return (
               <View key={idx} style={{}}>
-              {console.log(this.state.images[image])}
-                <TouchableOpacity style={{height:75, width:40, margin:5}} onPress={() => this.handleSelect.call(this, image)}>
-                  <Image source={require(`${this.state.images[image]}`)} style={{height:75, width:40, margin:5}}/>
+                <TouchableOpacity style={{height:75, width:40, margin:5}} onPress={() => {this.handleSelect.call(this, image)}}>
+                  <Image source={this.state.images[image]} style={{height:75, width:40, margin:5}}/>
                 </TouchableOpacity>
               </View>
             )
@@ -70,6 +82,7 @@ class GameRoom extends Component {
         <Button 
           onPress={() => {
             this.props.playCardDispatch('666', this.state.selectedCard)
+            this.setState({selectedCard: ''})
           }}
           title="Play Card"
         />
