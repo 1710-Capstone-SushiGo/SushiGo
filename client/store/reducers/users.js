@@ -1,5 +1,3 @@
-import { createStore } from 'redux';
-
 /**
  * ACTION TYPES
  */
@@ -23,27 +21,28 @@ export const getCurrentUser = (socketId) => {
   return { type: GET_CURRENT_USER, socketId }
 }
 
-export const playCard = (card) => {
-  return { type: PLAY_CARD, card }
+export const playCard = (socketId, card) => {
+  return { type: PLAY_CARD, card, socketId }
 }
 /**
  * REDUCER
  */
-function reducer(state = defaultUser, action) {
+export default function (state = defaultUser, action) {
   let newState = Object.assign({}, state);
   switch (action.type) {
     case GET_CURRENT_USER:
       newState.currentUser =  newState.users.find(ele => ele.socketId === action.socketId);
       return newState;
-      case PLAY_CARD: 
-      newState.keep.push(action.card);
-      let idx = newState.hand.indexOf(action.card);
-      newState.hand.splice(idx, 1);
-      return newState      
-    default: 
+    case PLAY_CARD:
+      let user = newState.users.find(ele => ele.socketId === action.socketId);
+      let i = newState.users.indexOf(user);
+      user.keep.push(action.card);
+      let j = user.hand.indexOf(action.card);
+      user.hand.splice(j, 1);
+      newState.users[i] = user;
+      return newState;
+    default:
       return state;
   }
-  }
-      
-const store = createStore(reducer)
-export default store
+}
+    

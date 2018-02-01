@@ -22,14 +22,14 @@ export default class GameRoom extends Component {
         <View style={styles.dropZone}>
           <Text style={styles.text}>Drop them here!</Text>
         </View>
-        <View style={styles.ballContainer} />
-        <View style={styles.row}>
+        
+        <View>
           {this.state.imageArray.map(elem => {
             idx++
             return (
-              <View key={idx}>
-                {<Draggable img={elem}/>}
-              </View>
+              
+                <Draggable img={elem}/>
+              
             )
           })}
         </View>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { AppRegistry, StyleSheet, Image, Text, View, Alert } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import store from '../store';
+import {Provider} from 'react-redux';
 
 export default class OnLoad extends React.Component {
 
@@ -22,6 +24,7 @@ export default class OnLoad extends React.Component {
     render(navigation) {
         let display = this.state.showText ? this.props.text : 'Press Anywhere To Start';
         return (
+            <Provider store = {store}>
             <View style={styles.container}
                 onResponderGrant={() => this.props.navigation.navigate('StartMenu')}
                 onStartShouldSetResponder={(e) => { return true }}
@@ -37,6 +40,7 @@ export default class OnLoad extends React.Component {
 
                 <Text style={{ fontSize: 20, color: 'white' }} > {display}</Text>
             </View >
+            </Provider>
         );
     }
 }
