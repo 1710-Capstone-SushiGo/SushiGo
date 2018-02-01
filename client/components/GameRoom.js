@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, PanResponder, Animated, TouchableOpacity, Image } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+
 import io from 'socket.io-client/dist/socket.io'
 import Orientation from 'react-native-orientation';
 import Draggable from './Draggable'
@@ -13,17 +14,6 @@ export default class GameRoom extends Component {
   constructor(){
     super()
     this.state = {
-      hand: [pudding, chopsticks, pudding, chopsticks, pudding, chopsticks, pudding],
-      selectedCard: ''
-    }
-
-    this.socket = io('http://localhost:3000')
-    this.socket.on('connection', () => console.log('connected'))
-  }
-
-  handleSelect = async (image) => {
-    await this.setState({selectedCard: image})
-  }
 
   render() {
     let idx = 0

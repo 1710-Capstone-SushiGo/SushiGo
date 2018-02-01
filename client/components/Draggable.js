@@ -34,7 +34,7 @@ export default class Draggable extends Component {
         ]),
         onPanResponderRelease: (e, gesture) => {
           if (this.isDropArea(gesture)) {
-            console.log("ITEM IS DROPPED")
+            this.props.socket.emit('dropped')
             Animated.timing(this.state.opacity, {
               toValue: 0,
               duration: 1000
