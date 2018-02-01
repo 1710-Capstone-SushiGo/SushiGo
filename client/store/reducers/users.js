@@ -17,7 +17,7 @@ const defaultUser = {
 /**
  * ACTION CREATORS
  */
-export const getCurrent = (socketId) => {
+export const getCurrentUser = (socketId) => {
   return { type: GET_CURRENT_USER, socketId }
 }
 
@@ -32,6 +32,7 @@ export default function (state = defaultUser, action) {
   switch (action.type) {
     case GET_CURRENT_USER:
       newState.current =  newState.all.find(ele => ele.socketId === action.socketId);
+      console.log(newState.current)
       return newState;
     case PLAY_CARD:
       let user = newState.all.find(ele => ele.socketId === action.socketId);
