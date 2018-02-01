@@ -6,6 +6,7 @@ import HowToPlay from './components/HowToPlay'
 import Lobby from './components/Lobby'
 import OnLoad from './components/OnLoad'
 import GameRoom from './components/GameRoom'
+import {Login} from './components/Login'
 
 export default RootNavigator = StackNavigator({
   Main: {
@@ -46,6 +47,12 @@ export default RootNavigator = StackNavigator({
     screen: GameRoom,
     navigationOptions: {
       headerTitle: 'Game Room'
+    }
+  },
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      headerTitle: 'Login'
     }
   }
 });
