@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
+
 const StartMenu = ({ navigation }) => (
 	<View style={styles.container}>
 		<Button

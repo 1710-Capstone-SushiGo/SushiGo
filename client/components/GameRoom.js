@@ -6,19 +6,20 @@ import {connect} from 'react-redux';
 import io from 'socket.io-client/dist/socket.io'
 import Orientation from 'react-native-orientation';
 import Draggable from './Draggable'
-import userAvatar from '../../public/img/userAvatar.png'
-import chopsticks from '../../public/img/cardViews/chopsticks.png'
-import dumpling from '../../public/img/cardViews/dumpling.png'
-import egg from '../../public/img/cardViews/egg.png'
-import makiOne from '../../public/img/cardViews/maki1.png'
-import makiTwo from '../../public/img/cardViews/maki2.png'
-import makiThree from'../../public/img/cardViews/maki3.png'
-import pudding from '../../public/img/cardViews/pudding.png'
-import salmon from '../../public/img/cardViews/salmon.png'
-import sashimi from '../../public/img/cardViews/sashimi.png'
-import squid from '../../public/img/cardViews/squid.png'
-import tempura from '../../public/img/cardViews/tempura.png'
-import wasabi from '../../public/img/cardViews/wasabi.png'
+
+import userAvatar from '../../public/img/userAvatar.png';
+import chopsticks from '../../public/img/cardViews/chopsticks.png';
+import dumpling from '../../public/img/cardViews/dumpling.png';
+import egg from '../../public/img/cardViews/egg.png';
+import maki1 from '../../public/img/cardViews/maki1.png';
+import maki2 from '../../public/img/cardViews/maki2.png';
+import maki3 from '../../public/img/cardViews/maki3.png';
+import pudding from '../../public/img/cardViews/pudding.png';
+import salmon from '../../public/img/cardViews/salmon.png';
+import sashimi from '../../public/img/cardViews/sashimi.png';
+import squid from '../../public/img/cardViews/squid.png';
+import tempura from '../../public/img/cardViews/tempura.png';
+import wasabi from '../../public/img/cardViews/wasabi.png';
 
 class GameRoom extends Component {
 
@@ -68,7 +69,7 @@ class GameRoom extends Component {
        <View style={{flexDirection: 'row', margin: 5}}>
         {
           this.props.currentUser.hand && this.props.currentUser.hand.map((image) => {
-            idx++
+            idx++;
             return (
               <View key={idx} style={{}}>
                 <TouchableOpacity style={{height:75, width:40, margin:5}} onPress={() => this.handleSelect.call(this, image)}>

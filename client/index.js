@@ -41,8 +41,7 @@ export default RootNavigator = StackNavigator({
     navigationOptions: {
       headerTitle: 'Lobby'
     }
-  }
-  ,
+  },
   GameRoom: {
     screen: GameRoom,
     navigationOptions: {
