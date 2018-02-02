@@ -42,6 +42,8 @@ class GameRoom extends Component {
 
     this.socket = io('http://localhost:3000')
     this.socket.on('connection', () => console.log('connected'))
+    this.socket.on('new-thing', (msg)=>console.log(msg))
+    this.socket.emit('new-thing','')
   }
 
   componentDidMount() {
@@ -69,7 +71,6 @@ class GameRoom extends Component {
         {
           this.props.currentUser.hand && this.props.currentUser.hand.map((image) => {
             idx++
-            console.log('----------------', image)
             return (
               <View key={idx} style={{}}>
                 <TouchableOpacity style={{height:75, width:40, margin:5}} onPress={() => {this.handleSelect.call(this, image)}}>
@@ -83,6 +84,8 @@ class GameRoom extends Component {
           onPress={() => {
             this.props.playCardDispatch('666', this.state.selectedCard)
             this.setState({selectedCard: ''})
+            var message = this.props;
+            this.socket.emit('new-state', message);
           }}
           title="Play Card"
         />
@@ -91,8 +94,9 @@ class GameRoom extends Component {
     );
   }
 }
-
+// console.log(this.props)
 const mapState = state => {
+ 
   return {
     users: state.users.all,
     currentUser: state.users.current
