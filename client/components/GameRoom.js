@@ -58,6 +58,7 @@ class GameRoom extends Component {
   
   render() {
     let idx = 0
+    console.log('------------- props',  this.props)
     return (
       <View style={{height:'100%', flexDirection: 'column', justifyContent: 'space-between', alignItems:'center', backgroundColor: '#213F99'}}>
         
@@ -69,6 +70,24 @@ class GameRoom extends Component {
           <Image source={userAvatar} style={{height:50, width:50, margin:10}} />
           <Image source={userAvatar} style={{height:50, width:50, margin:10}} />
         </View>
+        <View style={{flexDirection: 'row', margin: 5}}>
+        {
+          this.props.currentUser.keep && this.props.currentUser.keep.map((image) => {
+            idx++;
+            return (
+              <View key={idx} style={{}}>
+                <TouchableOpacity style={{height:75, width:40, margin:5}}>
+                  <Image source={this.state.images[image]} style={{height:75, width:40, margin:5}}/>
+                </TouchableOpacity>
+              </View>
+            )
+          })
+        }
+        <Button 
+          onPress={() => {}}
+          title="Keep Card"
+        />
+       </View>
        <View style={{flexDirection: 'row', margin: 5}}>
         {
           this.props.currentUser.hand && this.props.currentUser.hand.map((image) => {
