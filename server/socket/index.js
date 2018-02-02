@@ -1,7 +1,6 @@
-const reducer = require('../store').endTurn.reducer
 const store = require('../store').store
-const passHand = require('../store').endTurn.passHand
-const state = require('../store').endTurn.state
+const passHand = require('../store').passHand
+
 
 module.exports = (io) => {
     io.on('connection', (socket) => {
@@ -10,9 +9,18 @@ module.exports = (io) => {
         socket.on('help', (msg) => {
             socket.emit('sendhelp', 'Pass Hand')
         })
-
-        socket.on('passHand', playerId => {
-            socket.emit('newHand', reducer(state,passHand(playerId)))
+        
+        let counter = 0;
+        let allUsers = [];
+        socket.on('passHand', current => {
+            counter++;
+            allUsers.push(current);
+            if (counter === 4) {
+                let newState = passHand(allUsers);
+                counter = 0;
+                allUsers = [];
+                socket.emit('newHand', newState);
+            }
         })
 
         socket.on('disconnect', () => {

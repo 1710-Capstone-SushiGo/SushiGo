@@ -1,10 +1,10 @@
 const createStore = require('redux').createStore
 const combineReducers = require('redux').combineReducers
 const applyMiddleware = require('redux').applyMiddleware
-const endTurn = require('./reducers/endTurn')
+const passHand = require('./reducers/endTurn')
 
 
-const reducer = combineReducers({ endTurn });
+const reducer = combineReducers({ passHand });
 
 const store = createStore(reducer);
 
@@ -12,4 +12,4 @@ const store = createStore(reducer);
 
 // export * from './reducers/endTurn';
 
-module.exports = {store, endTurn}
+module.exports = { store, passHand }
