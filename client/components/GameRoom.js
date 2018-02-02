@@ -41,7 +41,9 @@ class GameRoom extends Component {
     }}
 
     this.socket = io('http://localhost:3000')
-    this.socket.on('connection', () => console.log('connected'))
+    this.socket.emit('help', 'Hand Passed')
+    this.socket.on('sendhelp', (msg) => console.log(msg))
+    this.socket.on('newHand', newHand => console.log(newHand))
   }
 
   componentDidMount() {
@@ -82,6 +84,7 @@ class GameRoom extends Component {
           onPress={() => {
             this.props.playCardDispatch('666', this.state.selectedCard)
             this.setState({selectedCard: ''})
+            this.socket.emit('passHand', 2)
           }}
           title="Play Card"
         />

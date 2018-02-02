@@ -11,29 +11,32 @@ const defaultUser = {
     { username: 'Nick', userId: '2', playerId: 1, socketId: '678', keep: ['wasabi'], hand: ['maki1', 'makiTwo'] },
     { username: 'Jeff', userId: '1', playerId: 2, socketId: '666', keep: ['sashimi'], hand: ['chopsticks', 'tempura', 'makiOne', 'sashimi', 'sashimi', 'wasabi'] }
   ],
-  current: {}
+  current:  { username: 'Jeff', userId: '1', playerId: 2, socketId: '666', keep: ['sashimi'], hand: ['chopsticks', 'tempura', 'makiOne', 'sashimi', 'sashimi', 'wasabi'] }
 };
 /**
  * ACTION CREATORS
  */
-export const passHand = (playerId) => {
-  return { type: PASS_HAND, playerId }
-}
+module.exports = {
+  state: defaultUser,
+  passHand: (playerId) => {
+    return { type: PASS_HAND, playerId }
+  },
 
 /**
  * REDUCER
  */
-export default function (state = defaultUser, action) {
-  let newState = Object.assign({}, state);
-  switch (action.type) {
-    case PASS_HAND:
-        let total = newState.all.length;
-        let nextPlayer =  newState.all.find(ele => 
-            ele.playerId === (action.playerId%total + 1));
-        let idx = newState.all.indexOf(nextPlayer);
-        newState.all[idx].hand = newState.current.hand; 
-        return newState;
-    default:
-        return state;
+  reducer: function (state = defaultUser, action) {
+    let newState = Object.assign({}, state);
+    switch (action.type) {
+      case PASS_HAND:
+          let total = newState.all.length;
+          let nextPlayer =  newState.all.find(ele => 
+              ele.playerId === (action.playerId%total + 1));
+          let idx = newState.all.indexOf(nextPlayer);
+          newState.all[idx].hand = newState.current.hand; 
+          return newState;
+      default:
+          return state;
+    }
   }
 }
