@@ -43,7 +43,7 @@ class GameRoom extends Component {
       selectedCard: ''
     }
 
-    this.socket = io('http://localhost:3000')
+    this.socket = io('http://172.16.23.137:3000')
     this.socket.on('sendhelp', (msg) => console.log(msg))
     this.socket.emit('help', 'help requested')
   }

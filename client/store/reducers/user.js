@@ -37,7 +37,7 @@ export const me = () =>
 
 export const auth = (email, password, method) =>
   dispatch =>
-    axios.post(`/auth/${method}`, { email, password })
+    axios.post(`http://172.16.23.137:3000/auth/${method}`, { email, password })
       .then(res => {
         dispatch(getUser(res.data))
       }, authError => { // rare example: a good use case for parallel (non-catch) error handler

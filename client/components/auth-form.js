@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Button} from 'react-native'
+import {View, Button, Text} from 'react-native'
 import {FormLabel, FormInput} from 'react-native-elements'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -19,7 +19,8 @@ class AuthForm extends React.Component {
   }
   
   render() {
-    const handleSubmit = this.props.handleSubmit
+    const {name, displayName, handleSubmit, error} = this.props
+    console.log('Props: ', this.props)
     return (
       <View style={{width: '75%', alignItems: 'center'}}>
           <FormLabel>Email</FormLabel>
@@ -27,9 +28,10 @@ class AuthForm extends React.Component {
           <FormLabel>Password</FormLabel>
           <FormInput secureTextEntry={true} onChangeText={(text)=>this.setState({password: text})} />
           <Button 
-            title="Login"
-            onPress={() => handleSubmit(this.state.email, this.state.password, 'login')}
+            title= {displayName}
+            onPress={() => handleSubmit(this.state.email, this.state.password, name)}
           />
+          {error && error.response && <View><Text>{error.response.data}</Text></View>}
       </View>
     )
   }
