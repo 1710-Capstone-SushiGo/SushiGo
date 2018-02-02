@@ -6,7 +6,7 @@ import HowToPlay from './components/HowToPlay'
 import Lobby from './components/Lobby'
 import OnLoad from './components/OnLoad'
 import GameRoom from './components/GameRoom'
-import {Login} from './components/Login'
+import {Login} from './components/auth-form'
 
 export default RootNavigator = StackNavigator({
   Main: {
