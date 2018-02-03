@@ -116,12 +116,12 @@ class GameRoom extends Component {
           <Image source={userAvatar} style={{height:50, width:50, margin:10}} />
           <Image source={userAvatar} style={{height:50, width:50, margin:10}} />
         </View>
-        <View style={{flexDirection: 'row', margin: 5}}>
+        <View style={[styles.background,{flexDirection: 'row', margin: 5}]}>
         {
           this.state.currentUser && this.state.currentUser.keep && this.state.currentUser.keep.map((image) => {
             idx++;
             return (
-              <View key={idx} style={{}}>
+              <View key={idx} style={{bottom:4,right:4,margin:6}}>
                 <TouchableOpacity style={{height:75, width:40, margin:5}}>
                   <Image source={this.state.images[image]} style={{height:75, width:40, margin:5}}/>
                 </TouchableOpacity>
@@ -129,15 +129,6 @@ class GameRoom extends Component {
             )
           })
         }
-        <Button 
-          onPress={() => {}}
-          title="Keep Card"
-          onPress={() => {
-            // this.props.playCardDispatch('666', this.state.selectedCard)
-            // this.setState({selectedCard: ''})
-            this.socket.emit('endTurn', this.state.currentUser)
-          }}
-        />
        </View>
        <View style={{flexDirection: 'row', margin: 5}}>
         {
@@ -171,13 +162,14 @@ class GameRoom extends Component {
                     onPress={() => {
                       if (this.state.selectedCard!== '') this.props.playCardDispatch('666', this.state.selectedCard)
                       this.setState({selectedCard: ''})
+                      this.socket.emit('endTurn', this.state.currentUser)
                       this.closeModal();
                     }}
                   >
                   Play Card
                   </Text>
-                  <Text
-                  style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]} 
+                 <Text
+                  style={[styles.fontTwo,isFontLoaded && {fontFamily: 'Baloo-Regular'}]} 
                     onPress={() => {
                       this.closeModal()
                     }}>
@@ -224,6 +216,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#FFDD17',
     marginTop: 15
+  },
+  fontTwo: {
+    fontSize: 18,
+    color: '#FFDD17',
+    marginTop: 15,
+    marginLeft: 40
+  },
+  background:{
+    backgroundColor: '#262261',
+    borderRadius: 10
   }
  });
 
