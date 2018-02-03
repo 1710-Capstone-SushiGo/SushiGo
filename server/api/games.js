@@ -16,8 +16,7 @@ router.post('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
     Game.findById(req.params.id,
         {
-            include: [User],
-            attributes: ['id', 'email']
+            include: {all: true}
         })
         .then(game => {
             if (!game) res.status(404).end()

@@ -54,7 +54,7 @@ export default function (state = defaultUser, action) {
 
       return newState
     case GET_CURRENT_USER:
-      newState.current =  newState.all.find(ele => ele.id === action.id);
+      newState.current =  newState.all.find(ele => ele.socketId === action.userId);
       return newState;
     case PLAY_CARD:
       let user = newState.all.find(ele => ele.socketId === action.socketId);

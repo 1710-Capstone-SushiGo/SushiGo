@@ -13,7 +13,6 @@ module.exports = (io) => {
                 allUsers = [];
                 socket.emit('newUsersInfo', newState);
             }
-            console.log('endTurned')
         })
 
         socket.on('endRound', () => {
@@ -32,12 +31,12 @@ module.exports = (io) => {
 
 const passHand = (arrayOfUsers) => {
     arrayOfUsers = arrayOfUsers.sort((user1, user2) => { return user1.userId - user2.userId })
-        let temp = arrayOfUsers.map(elem => {
-          return elem.hand
-        })
-        for (var i = 0; i < temp.length - 1; i++) {
-          arrayOfUsers[i].hand = temp[(i + 1)]
-        }
-        arrayOfUsers[temp.length - 1].hand = temp[0]
-        return arrayOfUsers;
+    let temp = arrayOfUsers.map(elem => {
+      return elem.hand
+    })
+    for (var i = 0; i < temp.length - 1; i++) {
+      arrayOfUsers[i].hand = temp[(i + 1)]
+    }
+    arrayOfUsers[temp.length - 1].hand = temp[0]
+    return arrayOfUsers;
   }
