@@ -13,6 +13,7 @@ module.exports = (io) => {
                 allUsers = [];
                 socket.emit('newUsersInfo', newState);
             }
+            console.log('turn ended')
         })
 
         socket.on('endRound', () => {
