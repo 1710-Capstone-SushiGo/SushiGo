@@ -5,6 +5,18 @@ module.exports = {
     return { type: PASS_HAND, allUsers }
   },
 
+  passHandFunction: (arrayOfUsers) => {
+    arrayOfUsers = arrayOfUsers.sort((user1, user2) => { return user1.playerId - user2.playerId })
+        let temp = arrayOfUsers.map(elem => {
+          return elem.hand
+        })
+        for (var i = 0; i < temp.length - 1; i++) {
+          arrayOfUsers[i].hand = temp[(i + 1)]
+        }
+        arrayOfUsers[temp.length - 1].hand = temp[0]
+        return arrayOfUsers;
+  },
+
   reducer: function (state = {
     all: [],
     current: {}
@@ -26,3 +38,4 @@ module.exports = {
     }
   }
 }
+

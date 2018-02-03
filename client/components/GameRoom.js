@@ -75,10 +75,8 @@ class GameRoom extends Component {
       isFontLoaded: false,
     }
 
-    this.socket = io('http://localhost:3000')
-    this.socket.emit('help', 'Hand Passed')
-    this.socket.on('sendhelp', (msg) => console.log(msg))
-    this.socket.on('newHand', newHand => console.log(newHand))
+    this.socket = io('http://172.16.23.137:3000')    
+    this.socket.on('newUsers', newUsers => console.log('newUsers: ', newUsers))
   }
 
   componentDidMount() {
@@ -129,17 +127,13 @@ class GameRoom extends Component {
           })
         }
         <Button 
-<<<<<<< HEAD
           onPress={() => {}}
           title="Keep Card"
-=======
           onPress={() => {
-            this.props.playCardDispatch('666', this.state.selectedCard)
-            this.setState({selectedCard: ''})
-            this.socket.emit('passHand', 2)
+            // this.props.playCardDispatch('666', this.state.selectedCard)
+            // this.setState({selectedCard: ''})
+            this.socket.emit('passHand', this.props.currentUser)
           }}
-          title="Play Card"
->>>>>>> 55a5e3e061d6e20e84b219f26c7c43839fcfe287
         />
        </View>
        <View style={{flexDirection: 'row', margin: 5}}>
@@ -174,8 +168,6 @@ class GameRoom extends Component {
                     onPress={() => {
                       if (this.state.selectedCard!== '') this.props.playCardDispatch('666', this.state.selectedCard)
                       this.setState({selectedCard: ''})
-                      var message = this.props;
-                      this.socket.emit('new-state', message);
                       this.closeModal();
                     }}
                   >

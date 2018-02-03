@@ -3,7 +3,7 @@ const { User, Game } = require('../db/models');
 
 router.get('/', (req, res, next) => {
     User.findAll({
-        attributes: ['id', 'email']
+        attributes: ['id', 'name']
     })
         .then(users => res.json(users))
         .catch(next);
