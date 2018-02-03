@@ -70,17 +70,20 @@ class GameRoom extends Component {
         tempura: fulltempura,
         wasabi: fullwasabi
       },
+      endGame: false,
       selectedCard: '',
       modalVisible: false,
       isFontLoaded: false,
     }
 
     this.socket = io('http://172.16.23.137:3000')    
-    this.socket.on('newUsers', newUsers => console.log('newUsers: ', newUsers))
+    this.socket.on('newUsersInfo', newUsers => this.setState({users: newUsers, currentUser: newUsers.find((user) => {return user.userId === this.props.currentUser.userId})}))
+    this.socket.on('endGame', () => this.setState({endGame:true}))
   }
 
-  componentDidMount() {
-    this.props.getCurrentUserDispatch('666')
+  async componentDidMount() {
+    await this.props.getCurrentUserDispatch('666')
+    this.setState({users:this.props.users, currentUser: this.props.currentUser})
     Font.loadAsync({'Baloo-Regular': require('../../assets/font/Baloo-Regular.ttf')})
     .then(()=>{
       this.setState({isFontLoaded: true})
@@ -115,7 +118,7 @@ class GameRoom extends Component {
         </View>
         <View style={{flexDirection: 'row', margin: 5}}>
         {
-          this.props.currentUser.keep && this.props.currentUser.keep.map((image) => {
+          this.state.currentUser && this.state.currentUser.keep && this.state.currentUser.keep.map((image) => {
             idx++;
             return (
               <View key={idx} style={{}}>
@@ -132,13 +135,13 @@ class GameRoom extends Component {
           onPress={() => {
             // this.props.playCardDispatch('666', this.state.selectedCard)
             // this.setState({selectedCard: ''})
-            this.socket.emit('passHand', this.props.currentUser)
+            this.socket.emit('endTurn', this.state.currentUser)
           }}
         />
        </View>
        <View style={{flexDirection: 'row', margin: 5}}>
         {
-          this.props.currentUser.hand && this.props.currentUser.hand.map((image) => {
+          this.state.currentUser && this.state.currentUser.hand && this.state.currentUser.hand.map((image) => {
             idx++
             return (
               <View key={idx} style={{}}>
@@ -191,7 +194,6 @@ class GameRoom extends Component {
 }
 
 const mapState = state => {
- 
   return {
     users: state.users.all,
     currentUser: state.users.current

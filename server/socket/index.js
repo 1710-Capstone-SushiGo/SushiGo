@@ -1,21 +1,27 @@
-const store = require('../store').store
-
-
 module.exports = (io) => {
     io.on('connection', (socket) => {
         console.log(`A socket connection to the server has been made: ${socket.id}`)
         
         let counter = 0;
-        let allUsers = [{ username: 'Nick', userId: '2', socketId: '678', keep: ['wasabi'], hand: ['maki1', 'makiTwo'] }];
-        socket.on('passHand', current => {
+        let allUsers = [{ username: 'Nick', userId: '2', socketId: '678', keep: ['wasabi'], hand: ['makiOne', 'makiTwo'] }];
+        socket.on('endTurn', current => {
             counter++;
             allUsers.push(current);
             if (counter === 1) {
                 let newState = passHand(allUsers);
                 counter = 0;
                 allUsers = [];
-                socket.emit('newUsers', newState);
+                socket.emit('newUsersInfo', newState);
             }
+            console.log('endTurned')
+        })
+
+        socket.on('endRound', () => {
+            socket.emit('refreshRound')
+        })
+
+        socket.on('endGame', () => {
+            socket.emit('endGameFlag', true)
         })
 
         socket.on('disconnect', () => {
