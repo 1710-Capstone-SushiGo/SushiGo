@@ -4,6 +4,7 @@ import {FormLabel, FormInput} from 'react-native-elements'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {fetchUser} from '../store/'
 
 
 /**
@@ -16,6 +17,10 @@ class AuthForm extends React.Component {
       email: '',
       password: ''
     }
+  }
+  
+  componentDidMount(){
+    fetchUser(user)
   }
   
   render() {
