@@ -11,6 +11,7 @@
  */
 const db = require('../server/db')
 const {User} = require('../server/db/models')
+const {Game} = require('../server/db/models')
 
 async function seed () {
   await db.sync({force: true})
@@ -19,11 +20,19 @@ async function seed () {
   // executed until that promise resolves!
 
   const users = await Promise.all([
-    User.create({name: 'jeff', email: 'someguy@email.com', password: '123'}),
+    User.create({name: 'jeff', email: 'jeff@email.com', password: '123'}),
+    User.create({name: 'will', email: 'will@email.com', password: '123'}),
+    User.create({name: 'nick', email: 'nick@email.com', password: '123'}),
+    User.create({name: 'jimmi', email: 'jimmi@email.com', password: '123'}),
   ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
   console.log(`seeded ${users.length} users`)
+
+  const games = await Promise.all([
+    Game.create()
+  ])
+  console.log(`seeded ${games.length} games`)
 
   console.log(`seeded successfully`)
 }

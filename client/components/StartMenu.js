@@ -5,12 +5,13 @@ import { Font } from 'expo';
 
 
 export default class StartMenu extends React.Component {
+
 	static navigationOptions = {
         header: null
     }
+
 	state = {
 		isFontLoaded: false,
-		// modalVisible: false
 	}
 
 	componentDidMount(){
@@ -23,58 +24,19 @@ export default class StartMenu extends React.Component {
 		})
 	}
 
-	// openModal() {
-	// 	this.setState({modalVisible:true});
-	//   }
-	
-	// closeModal() {
-	// 	this.setState({modalVisible:false});
-	//   }
-
-	render(navigation){
+	render(){
+		//user logged in info: this.props.navigation.state.params
 		const { isFontLoaded } =this.state;
 		return (
 			<View style={styles.container}>
-			
-			{/* <Text style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]}>Create Game</Text> */}
-			{/* <View style={styles.container}> */}
 				<Text style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]}
-					onPress={() => this.props.navigation.navigate('JoinGame')}>Join Game</Text>
+					onPress={() => this.props.navigation.navigate('JoinGame', this.props.navigation.state.params)}>Join Game</Text>
 				<Text style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]}
-					onPress={() => this.props.navigation.navigate('CreateGame')}>Create Game</Text>
+					onPress={() => this.props.navigation.navigate('CreateGame', this.props.navigation.state.params)}>Create Game</Text>
 				<Text style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]}
-					onPress={() => this.props.navigation.navigate('HowToPlay')}>How To Play</Text>
+					onPress={() => this.props.navigation.navigate('HowToPlay', this.props.navigation.state.params)}>How To Play</Text>
 				<Text style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]}
-					onPress={() => this.props.navigation.navigate('GameRoom')}>Game Room</Text>
-				<Text style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]}
-					onPress={() => this.props.navigation.navigate('Login')}>Login</Text>
-			{/* </View> */}
-			 		
-
-			{/* <View style={styles.container}>
-          <Modal
-              visible={this.state.modalVisible}
-              animationType={'slide'}
-              onRequestClose={() => this.closeModal()}
-          >
-            <View style={styles.modalContainer}>
-              <View style={styles.innerContainer}>
-                <Text>This is content inside of modal component</Text>
-                <Button
-                    onPress={() => this.closeModal()}
-                    title="Close modal"
-                >
-                </Button>
-              </View>
-            </View>
-          </Modal>
-          <Button
-              onPress={() => this.openModal()}
-              title="Open modal"
-          />
-        </View> */}
-
-
+					onPress={() => this.props.navigation.navigate('GameRoom', this.props.navigation.state.params)}>Game Room</Text>
 			</View>
 		)
 	}
@@ -93,14 +55,4 @@ const styles = StyleSheet.create({
 		color: '#FFDD17',
 		marginTop: 15
 	}
-// 	modalContainer: {
-// 		flex: 1,
-// 		justifyContent: 'center',
-// 		backgroundColor: 'grey',
-// 	  },
-// 	  innerContainer: {
-// 		alignItems: 'center',
-// 	  },
  });
-
-// export default StartMenu;
