@@ -13,14 +13,15 @@ class Lobby extends Component {
     this.state = {
       users: []
     }
-    this.socket = io('http://192.168.1.30:3000')
+    this.socket = io('http://172.16.23.137:3000')
+    this.socket.on('connect', () => this.socket.emit('room','test', props.navigation.state.params))
     if(props.navigation.state.params.creator) {
       this.socket.on('receiveUser', (newUser) => {
-        if(props.navigation.state.params.id !== newUser.id) this.setState({users: this.state.users.push(newUser)})
+        if(props.navigation.state.params.id !== newUser.id) this.setState({users: this.state.users.concat([newUser])})
+        console.log('---- STATE USERS: ', this.state.users)
         this.socket.emit('updatedUsers', this.state.users)
       })
     }
-    this.socket.emit('Joined', props.navigation.state.params)
     this.socket.on('newUsers', (newUsers) => this.setState({users: newUsers}))
 
   }
