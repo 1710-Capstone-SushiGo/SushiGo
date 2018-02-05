@@ -8,7 +8,6 @@ const PLAY_CARD = 'PLAY_CARD';
 /**
  * INITIAL STATE
  */
-// const defaultUser = {username: 'Nick', keeps: [], hand: []};
 const defaultUser = {
   all: [
     { username: 'Nick', userId: '2', socketId: '678', keep: ['wasabi'], hand: ['maki1', 'makiTwo'] },

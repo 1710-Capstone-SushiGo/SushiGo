@@ -3,18 +3,9 @@ import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Font } from 'expo';
 
-// const CreateGame = ({navigation}) => (
-//     <View style={styles.container}>
-//         <Text>This is my CreateGame Component!</Text>
-//         <Button
-//             onPress={() => navigation.navigate('Lobby')}
-//             title="Create Game"
-//         />
-//     </View>
-// );
-
-
-
+/*
+only creater will be able to start game
+*/
 export default class CreatGame extends React.Component {
     state = {
 		isFontLoaded: false
@@ -34,11 +25,9 @@ export default class CreatGame extends React.Component {
     const { isFontLoaded } =this.state;
     return (
         <View style={styles.container}>
-         <Text style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]}>Create a Game</Text>
-
-         <Text style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]}
-					onPress={() => this.props.navigation.navigate('Lobby')}>Lobby</Text>
-    </View>
+          <Text style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]}
+					onPress={() => this.props.navigation.navigate('Lobby', Object.assign({}, this.props.navigation.state.params, {creator: true}))}>Start Game</Text>
+        </View>
     )
    }
 }
@@ -57,5 +46,3 @@ const styles = StyleSheet.create({
 		marginTop: 15
 	}
 })
-
-// export default CreateGame;
