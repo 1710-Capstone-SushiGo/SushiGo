@@ -7,7 +7,7 @@ server will send start game signal to other players
 module.exports = (io) => {
     io.on('connection', (socket) => {
         console.log(`A socket connection to the server has been made: ${socket.id}`)
-        socket.join('test')
+        
         let counter = 0;
         let allUsers = [{ username: 'Nick', userId: '2', socketId: '678', keep: ['wasabi'], hand: ['makiOne', 'makiTwo'] }];
         socket.on('endTurn', current => {
@@ -26,9 +26,8 @@ module.exports = (io) => {
             socket.in(room).emit('receiveUser', user)
         })
 
-        socket.on('updatedUsers', (users) => {
-            socket.emit('newUsers', users)
-            console.log(users)
+        socket.on('updatedUsers', (room, users) => {
+            socket.in(room).emit('newUsers', users)
         })
 
         socket.on('endRound', () => {
