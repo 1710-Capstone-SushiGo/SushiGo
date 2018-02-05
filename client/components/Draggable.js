@@ -14,8 +14,6 @@ export default class Draggable extends Component {
       pan: new Animated.ValueXY(),
       opacity: new Animated.Value(1)
     };
-    this.socket = SocketIOClient('http://localhost:3000')
-    this.socket.on('connection', () => console.log('connected'))
   }
 
   componentWillMount() {
@@ -36,7 +34,7 @@ export default class Draggable extends Component {
         ]),
         onPanResponderRelease: (e, gesture) => {
           if (this.isDropArea(gesture)) {
-            console.log("ITEM IS DROPPED")
+            this.props.socket.emit('dropped')
             Animated.timing(this.state.opacity, {
               toValue: 0,
               duration: 1000
@@ -70,7 +68,7 @@ export default class Draggable extends Component {
       return (
         <View style={{ position: "absolute" }}>
           <Animated.View {...this.panResponder.panHandlers} style={[panStyle, {opacity:this.state.opacity}]}>
-            <Image source={target}/>
+            <Image source={this.props.img}/>
           </Animated.View>
         </View>
       );

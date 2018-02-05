@@ -3,7 +3,7 @@ const { User, Game } = require('../db/models');
 
 router.get('/', (req, res, next) => {
     User.findAll({
-        attributes: ['id', 'email']
+        attributes: ['id', 'name']
     })
         .then(users => res.json(users))
         .catch(next);
@@ -14,6 +14,12 @@ router.post('/', (req, res, next) => {
         .then(user => res.status.json(user))
         .catch(next);
 });
+
+router.get('/info/:id', (req, res, next) => {
+    User.findById(req.params.id, {include: {all:true}})
+    .then(user => res.json(user))
+    .catch(next);
+})
 
 router.get('/:id', (req, res, next) => {
     if (req.user && req.user.id === req.params.id)
