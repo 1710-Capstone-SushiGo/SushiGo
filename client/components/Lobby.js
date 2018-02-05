@@ -19,7 +19,7 @@ class Lobby extends Component {
       this.socket.on('receiveUser', (newUser) => {
         if(props.navigation.state.params.id !== newUser.id) this.setState({users: this.state.users.concat([newUser])})
         console.log('---- STATE USERS: ', this.state.users)
-        this.socket.emit('updatedUsers', this.state.users)
+        this.socket.emit('updatedUsers', 'test', this.state.users)
       })
     }
     this.socket.on('newUsers', (newUsers) => this.setState({users: newUsers}))
@@ -32,6 +32,7 @@ class Lobby extends Component {
 
   render(){
     let currentUser = this.props.navigation.state.params
+    console.log(currentUser.name, this.state.users)
     return(
       <View style={styles.container}>
         <Text>This is my Lobby Component!</Text>
