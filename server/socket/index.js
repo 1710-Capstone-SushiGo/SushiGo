@@ -21,8 +21,9 @@ module.exports = (io) => {
             }
         })
 
-        socket.on('Joined', (user) => {
-            socket.emit('receiveUser', user)
+        socket.on('room', (room, user) => {
+            socket.join(room)
+            socket.in(room).emit('receiveUser', user)
         })
 
         socket.on('updatedUsers', (users) => {
