@@ -76,7 +76,7 @@ class GameRoom extends Component {
       isFontLoaded: false,
     }
 
-    this.socket = io('http://172.16.23.137:3000')    
+    this.socket = io('http://192.168.1.30:3000')    
     this.socket.on('newUsersInfo', newUsers => this.setState({users: newUsers, currentUser: newUsers.find((user) => {return user.userId === this.props.currentUser.userId})}))
     this.socket.on('endGame', () => this.setState({endGame:true}))
   }
@@ -187,8 +187,8 @@ class GameRoom extends Component {
 
 const mapState = state => {
   return {
-    users: state.users.all,
-    currentUser: state.users.current
+    users: state.gameUser.all,
+    currentUser: state.gameUser.current
   }
 }
 

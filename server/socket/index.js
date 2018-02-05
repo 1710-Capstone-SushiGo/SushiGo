@@ -1,7 +1,13 @@
+/*
+server will receive new players joining lobby
+server will emit new players that join lobby
+server will receive start game signal from creater
+server will send start game signal to other players
+*/
 module.exports = (io) => {
     io.on('connection', (socket) => {
         console.log(`A socket connection to the server has been made: ${socket.id}`)
-        
+        socket.join('test')
         let counter = 0;
         let allUsers = [{ username: 'Nick', userId: '2', socketId: '678', keep: ['wasabi'], hand: ['makiOne', 'makiTwo'] }];
         socket.on('endTurn', current => {
@@ -13,7 +19,15 @@ module.exports = (io) => {
                 allUsers = [];
                 socket.emit('newUsersInfo', newState);
             }
-            console.log('turn ended')
+        })
+
+        socket.on('Joined', (user) => {
+            socket.emit('receiveUser', user)
+        })
+
+        socket.on('updatedUsers', (users) => {
+            socket.emit('newUsers', users)
+            console.log(users)
         })
 
         socket.on('endRound', () => {
