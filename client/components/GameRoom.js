@@ -79,6 +79,8 @@ class GameRoom extends Component {
     this.socket = io('http://172.16.23.137:3000')    
     this.socket.on('newUsersInfo', newUsers => this.setState({users: newUsers, currentUser: newUsers.find((user) => {return user.userId === this.props.currentUser.userId})}))
     this.socket.on('endGame', () => this.setState({endGame:true}))
+    //handleChopstick function
+    this.handleChopsticks = this.handleChopsticks.bind(this)
   }
 
   async componentDidMount() {
@@ -94,13 +96,21 @@ class GameRoom extends Component {
     await this.setState({selectedCard: image})
   }
 
+  //handleChopsticks
+  handleChopsticks = () => {
+    chopsticksIndex = this.state.currentUser.keep.indexOf('chopsticks')
+    this.state.currentUser.keep.splice(chopsticksIndex, 1)
+    this.state.currentUser.hand.push('chopsticks')
+    this.state.currentUser.playedChopsticks = true
+  }
+
   openModal = async (image) => {
     await this.setState({selectedCard: image, modalVisible:true})
 	}
 	
 	closeModal() {
 		this.setState({modalVisible:false});
-	  }
+	}
   
   render() {
     let idx = 0
@@ -136,7 +146,8 @@ class GameRoom extends Component {
             idx++
             return (
               <View key={idx} style={{}}>
-                <TouchableOpacity style={{height:75, width:40, margin:5}} onPress={() => this.openModal(image)}>
+                {/* disable button if playedCard is true */}
+                <TouchableOpacity style={{height:75, width:40, margin:5}} disabled={this.state.currentUser.playedCard}  onPress={() => this.openModal(image)}>
                   <Image source={this.state.images[image]} style={{height:75, width:40, margin:5}}/>
                 </TouchableOpacity>
               </View>
@@ -162,7 +173,13 @@ class GameRoom extends Component {
                     onPress={() => {
                       if (this.state.selectedCard!== '') this.props.playCardDispatch('666', this.state.selectedCard)
                       this.setState({selectedCard: ''})
-                      this.socket.emit('endTurn', this.state.currentUser)
+                        //handleChopsticks 
+                        if (this.state.currentUser.haveChopsticks && !this.state.currentUser.playedChopsticks && this.state.currentUser.keep.length !== this.state.users[0].keep.length+1) 
+                          this.handleChopsticks()
+                        //change playedCard status
+                        if (!this.state.currentUser.haveChopsticks || this.state.currentUser.playedChopsticks)
+                          {this.state.currentUser.playedCard = true}
+                          this.socket.emit('endTurn', this.state.currentUser)
                       this.closeModal();
                     }}
                   >
@@ -231,4 +248,3 @@ const styles = StyleSheet.create({
 
 
 export default connect(mapState, mapDispatch)(GameRoom);
-
