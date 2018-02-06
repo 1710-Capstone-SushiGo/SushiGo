@@ -1,23 +1,36 @@
 import React from 'react'
-import {View, Button, Text} from 'react-native'
+import {View, Button, Text, StyleSheet} from 'react-native'
 import {FormLabel, FormInput} from 'react-native-elements'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {fetchUser} from '../store/'
 import { StackNavigator } from 'react-navigation';
+import { Font } from 'expo'
 
 /**
  * COMPONENT
  */
 class AuthForm extends React.Component {
 
+  static navigationOptions = {
+    header: null
+ }
+
   constructor(props) {
     super(props)
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      isFontLoaded: false
     }
+  }
+
+  async componentDidMount() {
+    Font.loadAsync({'Baloo-Regular': require('../../assets/font/Baloo-Regular.ttf')})
+    .then(()=>{
+      this.setState({isFontLoaded: true})
+    })
   }
 
   render() {
@@ -25,16 +38,17 @@ class AuthForm extends React.Component {
     //passes user as: this.props.navigation.state.params
     if(this.props.user.id) this.props.navigation.navigate('StartMenu', this.props.user)
     return (
-      <View style={{width: '75%', alignItems: 'center'}}>
-          <FormLabel>Email</FormLabel>
+      <View style={styles.container}>
+        <View style={styles.form}>
+          <FormLabel><Text style={styles.font}>Email</Text></FormLabel>
           <FormInput onChangeText={(text)=>this.setState({email: text.toLowerCase()})} />
-          <FormLabel>Password</FormLabel>
+          <FormLabel><Text style={styles.font}>Password</Text></FormLabel>
           <FormInput secureTextEntry={true} onChangeText={(text)=>this.setState({password: text})} />
-          <Button 
-            title= {displayName}
-            onPress={() => handleSubmit(this.state.email, this.state.password, name)}
-          />
-          {error && error.response && <View><Text>{error.response.data}</Text></View>}
+          <Text style={styles.login}
+            onPress={() => handleSubmit(this.state.email, this.state.password, name)}>{displayName}
+          </Text>
+          {error && error.response && <View><Text style={{fontFamily:'Baloo-Regular',color: 'red', fontSize: 15, marginLeft: '4%'}}>{error.response.data}</Text></View>}
+        </View>
       </View>
 
     )
@@ -74,6 +88,31 @@ const mapDispatch = (dispatch) => {
     }
   }
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#213F99'
+    },
+    form: {
+      width: 500,
+      marginLeft: '15%'
+    },
+    login: {
+      fontFamily: 'Baloo-Regular',
+      fontSize: 44,
+      color: '#FFDD17',
+      marginLeft: '35%',
+      top: 20
+    },
+    font: {
+      fontFamily: 'Baloo-Regular',
+      fontSize: 24,
+      color: '#FFDD17'
+    }
+
+ });
 
 export const Login = connect(mapLogin, mapDispatch)(AuthForm)
 export const Signup = connect(mapSignup, mapDispatch)(AuthForm)

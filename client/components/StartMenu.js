@@ -37,6 +37,8 @@ export default class StartMenu extends React.Component {
 					onPress={() => this.props.navigation.navigate('HowToPlay', this.props.navigation.state.params)}>How To Play</Text>
 				<Text style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]}
 					onPress={() => this.props.navigation.navigate('GameRoom', this.props.navigation.state.params)}>Game Room</Text>
+				<Text style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]}
+					onPress={() => this.props.navigation.navigate('Score', this.props.navigation.state.params)}>Score</Text>
 			</View>
 		)
 	}

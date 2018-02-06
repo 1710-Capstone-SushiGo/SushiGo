@@ -6,6 +6,7 @@ import HowToPlay from './components/HowToPlay'
 import Lobby from './components/Lobby'
 import OnLoad from './components/OnLoad'
 import GameRoom from './components/GameRoom'
+import Score from './components/Score'
 import {Login} from './components/auth-form'
 
 export default RootNavigator = StackNavigator({
@@ -52,6 +53,12 @@ export default RootNavigator = StackNavigator({
     screen: Login,
     navigationOptions: {
       headerTitle: 'Login'
+    }
+  },
+  Socre: {
+    screen: Score,
+    navigationOptions: {
+      headerTitle: 'Score'
     }
   }
 });
