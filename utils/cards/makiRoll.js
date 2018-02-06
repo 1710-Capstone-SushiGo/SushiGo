@@ -1,10 +1,8 @@
-let makiRoll = {};
-
 const calculateAmount = (user) => {
 	return user.oneMakiRollAmount + user.twoMakiRollAmount * 2 + user.threeMakiRollAmount * 3
 }
 
-makiRoll.whoGetsPoints = (arrUserInfo) => {
+whoGetsMaki = (arrUserInfo) => {
 	let sortedInfo = arrUserInfo.sort(function(user1, user2) {
 		return calculateAmount(user2) - calculateAmount(user1)
 	})
@@ -29,4 +27,4 @@ makiRoll.whoGetsPoints = (arrUserInfo) => {
 	return returnArray
 }
 
-module.exports = makiRoll
+module.exports = whoGetsMaki
