@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, Button, View, PanResponder, Animated, TouchableOpacity, Image, Modal } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { playCard, getCurrentUser } from '../store';
+import { playCard, getUsers } from '../store';
 import {connect} from 'react-redux';
 import io from 'socket.io-client/dist/socket.io'
 import Orientation from 'react-native-orientation';
@@ -39,8 +39,8 @@ class GameRoom extends Component {
      header: null
   }
 
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
       images: {
         chopsticks,
@@ -75,14 +75,19 @@ class GameRoom extends Component {
       modalVisible: false,
       isFontLoaded: false,
     }
+    this.socket.on('newUsersInfo',(users) => {
+      this.props.dispatchUsers({all:users, currentUser: users.filter((user) => user.id===this.state.currentUser.id)[0]})
+      this.setState({users, currentUser: users.filter((user) => user.id===this.state.currentUser.id)[0]})})
+    }
 
-    this.socket = io('http://172.16.23.137:3000')    
-    this.socket.on('newUsersInfo', newUsers => this.setState({users: newUsers, currentUser: newUsers.find((user) => {return user.userId === this.props.currentUser.userId})}))
-    this.socket.on('endGame', () => this.setState({endGame:true}))
-  }
+  socket = this.props.navigation.state.params.socket
+
+
 
   async componentDidMount() {
-    await this.props.getCurrentUserDispatch('666')
+    let params = this.props.navigation.state.params
+    let current = params.users.filter((user) => user.id === params.userId)[0]
+    await this.props.dispatchUsers({all:params.users, current})
     this.setState({users:this.props.users, currentUser: this.props.currentUser})
     Font.loadAsync({'Baloo-Regular': require('../../assets/font/Baloo-Regular.ttf')})
     .then(()=>{
@@ -103,7 +108,7 @@ class GameRoom extends Component {
 	  }
   
   render() {
-    let idx = 0
+    console.log('-------PLAYERID--------: ', this.state.currentUser && this.state.currentUser.playerId)
     const { isFontLoaded } =this.state;
     return (
       <View style={{height:'100%', flexDirection: 'column', justifyContent: 'space-between', alignItems:'center', backgroundColor: '#213F99'}}>
@@ -118,7 +123,7 @@ class GameRoom extends Component {
         </View>
         <View style={[styles.background,{flexDirection: 'row', margin: 5}]}>
         {
-          this.state.currentUser && this.state.currentUser.keep && this.state.currentUser.keep.map((image) => {
+          this.state.currentUser && this.state.currentUser.keep && this.state.currentUser.keep.map((image, idx) => {
             idx++;
             return (
               <View key={idx} style={{bottom:4,right:4,margin:6}}>
@@ -132,7 +137,7 @@ class GameRoom extends Component {
        </View>
        <View style={{flexDirection: 'row', margin: 5}}>
         {
-          this.state.currentUser && this.state.currentUser.hand && this.state.currentUser.hand.map((image) => {
+          this.state.currentUser && this.state.currentUser.hand && this.state.currentUser.hand.map((image, idx) => {
             idx++
             return (
               <View key={idx} style={{}}>
@@ -160,9 +165,9 @@ class GameRoom extends Component {
                   <Text
                     style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]} 
                     onPress={() => {
-                      if (this.state.selectedCard!== '') this.props.playCardDispatch('666', this.state.selectedCard)
+                      this.props.playCardDispatch(this.state.currentUser.playerId, this.state.selectedCard)
                       this.setState({selectedCard: ''})
-                      this.socket.emit('endTurn', this.state.currentUser)
+                      this.socket.emit('endTurn', this.state.currentUser, 'test')
                       this.closeModal();
                     }}
                   >
@@ -194,11 +199,11 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return ({
-    getCurrentUserDispatch(socketId) {
-      dispatch(getCurrentUser(socketId))
+    dispatchUsers(Users) {
+      dispatch(getUsers(Users))
     },
-    playCardDispatch(socketId, card) {
-      dispatch(playCard(socketId, card))
+    playCardDispatch(playerId, card) {
+      dispatch(playCard(playerId, card))
     }
   })
 }
