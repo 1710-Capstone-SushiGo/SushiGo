@@ -1,8 +1,8 @@
-const generateHand = require('../../utils/gameLogic')
-/*
-server will receive start game signal from creater
-server will send start game signal to other players with generated hands
-*/
+const generateHand = require('../../utils/gameLogic').generateHand
+const passHand = require('../../utils/gameLogic').passHand
+const updateUsersObject = require('../../utils/endRound')
+const updateForEndGame = require('../../utils/endGame')
+
 module.exports = (io) => {
     let counter = 0;
     let allUsers = [];
@@ -12,12 +12,14 @@ module.exports = (io) => {
         socket.on('endTurn', (current, room) => {
             counter++;
             allUsers.push(current);
-            console.log(counter, allUsers)
-            if (counter === 2) {
+            if (counter === current.numberOfPlayers) {
                 let newState = passHand(allUsers);
+                let updatedUsers
                 counter = 0;
                 allUsers = [];
-                io.in(room).emit('newUsersInfo', newState);
+                if (newState[0].hand.length === 0) updatedUsers = updateUsersObject(newState)
+                if (updatedUsers && updatedUsers[0] && updatedUsers[0].score.length === 3) io.in(room).emit('endGame',updateForEndGame(updatedUsers))
+                else io.in(room).emit('newUsersInfo', newState, updatedUsers);
             }
         })
 
@@ -35,31 +37,8 @@ module.exports = (io) => {
             io.in(room).emit('gameStart',startUsers)
         })
 
-        socket.on('endRound', () => {
-            socket.emit('refreshRound')
-        })
-
-        socket.on('endGame', () => {
-            socket.emit('endGameFlag', true)
-        })
-
-        socket.on('test', () => {
-            console.log('worked!')
-        })
         socket.on('disconnect', () => {
             console.log(`Connection ${socket.id} has left the building`)
         })
     })
 }
-
-const passHand = (arrayOfUsers) => {
-    arrayOfUsers = arrayOfUsers.sort((user1, user2) => { return user1.userId - user2.userId })
-    let temp = arrayOfUsers.map(elem => {
-      return elem.hand
-    })
-    for (var i = 0; i < temp.length - 1; i++) {
-      arrayOfUsers[i].hand = temp[(i + 1)]
-    }
-    arrayOfUsers[temp.length - 1].hand = temp[0]
-    return arrayOfUsers;
-  }

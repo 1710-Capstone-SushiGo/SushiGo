@@ -1,8 +1,8 @@
-calculateEgg = (amount) => {return amount * 1};
+const calculateEgg = (amount) => {return amount * 1};
 
-calculateSalmon = (amount) => {return amount * 2};
+const calculateSalmon = (amount) => {return amount * 2};
 
-calculateSquid = (amount) => {return amount * 3};
+const calculateSquid = (amount) => {return amount * 3};
 
 module.exports = {
 	calculateEgg,
