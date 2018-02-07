@@ -7,6 +7,7 @@ import Lobby from './components/Lobby'
 import OnLoad from './components/OnLoad'
 import GameRoom from './components/GameRoom'
 import {Login} from './components/auth-form'
+import EndGame from './components/EndGame'
 
 export default RootNavigator = StackNavigator({
   Main: {
@@ -53,5 +54,8 @@ export default RootNavigator = StackNavigator({
     navigationOptions: {
       headerTitle: 'Login'
     }
+  },
+  EndGame: {
+    screen: EndGame
   }
 });

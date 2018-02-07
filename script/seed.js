@@ -15,7 +15,6 @@ const {Game} = require('../server/db/models')
 
 async function seed () {
   await db.sync({force: true})
-  console.log('db synced!')
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
 
@@ -24,6 +23,7 @@ async function seed () {
     User.create({name: 'will', email: 'will@email.com', password: '123'}),
     User.create({name: 'nick', email: 'nick@email.com', password: '123'}),
     User.create({name: 'jimmi', email: 'jimmi@email.com', password: '123'}),
+    User.create({name: 'someone', email: 'someone@email.com', password: '123'})
   ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!

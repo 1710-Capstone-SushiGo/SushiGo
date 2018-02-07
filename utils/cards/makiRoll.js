@@ -6,9 +6,7 @@ const calculateAmount = (user) => {
 }
 
 const whoGetsMaki = (arrUserInfo) => {
-	console.log('------whoGetsMaki', arrUserInfo)
 	let sortedInfo = arrUserInfo.sort(function(user1, user2) {
-		console.log('----USERS', user1, user2)
 		return calculateAmount(user2) - calculateAmount(user1)
 	})
 	let sortHigh = sortedInfo.filter((user) => {return calculateAmount(user) === calculateAmount(sortedInfo[0])})

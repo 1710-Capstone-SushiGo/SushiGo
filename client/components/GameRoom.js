@@ -7,6 +7,7 @@ import io from 'socket.io-client/dist/socket.io'
 import Orientation from 'react-native-orientation';
 import Draggable from './Draggable'
 import { Font } from 'expo'
+import CurrentRoundView from './CurrentRoundView'
 import userAvatar from '../../public/img/userAvatar.png';
 import chopsticks from '../../public/img/cardViews/chopsticks.png';
 import dumpling from '../../public/img/cardViews/dumpling.png';
@@ -74,11 +75,11 @@ class GameRoom extends Component {
       selectedCard: '',
       cardPreview: false,
       isFontLoaded: false,
-      playedCard: false
+      playedCard: false,
+      currentRoundView: false
     }
     this.socket.on('endGame',(info) => {
-      console.log('GAME ENDED!')
-      // props.navigation.navigate('EndGame', info)
+      props.navigation.navigate('EndGame', info)
     })
     this.socket.on('newUsersInfo',(users, updateNewRound) => {
       if(updateNewRound) {
@@ -118,8 +119,16 @@ class GameRoom extends Component {
 	
 	cardPreviewClose() {
 		this.setState({cardPreview:false});
-	  }
-  
+	 }
+
+  currentRoundPreviewOpen = async () => {
+    await this.setState({cardPreview:true})
+  }
+
+  currentRoundViewClose() {
+    this.setState({currentRoundPreview:false});
+   }
+
   render() {
     const { isFontLoaded } =this.state;
     return (
@@ -147,21 +156,28 @@ class GameRoom extends Component {
           })
         }
        </View>
-       <View style={{flexDirection: 'row', margin: 5}}>
-        {
-          this.state.currentUser && this.state.currentUser.hand && this.state.currentUser.hand.map((image, idx) => {
-            idx++
-            return (
-              <View key={idx} style={{}}>
-                <TouchableOpacity style={{height:75, width:40, margin:5}} onPress={() => this.cardPreviewOpen(image)}>
-                  <Image source={this.state.images[image]} style={{height:75, width:40, margin:5}}/>
-                </TouchableOpacity>
-              </View>
-            )
-          })
-        }
+       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+         <View style={{flexDirection: 'row', margin: 5}}>
+          {
+            this.state.currentUser && this.state.currentUser.hand && this.state.currentUser.hand.map((image, idx) => {
+              idx++
+              return (
+                <View key={idx} style={{}}>
+                  <TouchableOpacity style={{height:75, width:40, margin:5}} onPress={() => this.cardPreviewOpen(image)}>
+                    <Image source={this.state.images[image]} style={{height:75, width:40, margin:5}}/>
+                  </TouchableOpacity>
+                </View>
+              )
+            })
+          }
+         </View>
+         <Text
+            style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]}
+            onPress={() => this.setState({currentRoundView: true})}
+         >
+         Show Round Info
+         </Text>
        </View>
-
        <View style={styles.container}>
           <Modal
               visible={this.state.cardPreview}
@@ -195,6 +211,16 @@ class GameRoom extends Component {
                 </View>
               </View>
             </View>
+          </Modal>
+        </View>
+        <View>
+          <Modal
+            visible={this.state.currentRoundView}
+            supportedOrientations={['landscape']}
+            transparent= {true}
+            onRequestClose={() => this.setState({currentRoundView: false})}
+          >
+            <CurrentRoundView usersArray={this.state.users} currentRound={this.currentRoundView}/>
           </Modal>
         </View>
       </View>
