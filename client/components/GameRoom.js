@@ -74,12 +74,21 @@ class GameRoom extends Component {
       selectedCard: '',
       modalVisible: false,
       isFontLoaded: false,
+      playedCard: false
     }
-    this.socket.on('newUsersInfo',(users) => {
-      this.props.dispatchUsers({all:users, currentUser: users.filter((user) => user.id===this.state.currentUser.id)[0]})
-      this.setState({users, currentUser: users.filter((user) => user.id===this.state.currentUser.id)[0]})})
-    }
-
+    this.socket.on('newUsersInfo',(users, updateNewRound) => {
+      console.log('-------UPDATE USERS', updateNewRound)
+      if(updateNewRound) {
+        this.setState({users: updateNewRound, currentUser: updateNewRound.filter((user) => user.id===this.state.currentUser.id)[0]})
+        this.props.dispatchUsers({all:updateNewRound, currentUser: updateNewRound.filter((user) => user.id===this.state.currentUser.id)[0]})
+      }
+      else {
+        this.props.dispatchUsers({all:users, currentUser: users.filter((user) => user.id===this.state.currentUser.id)[0]})
+        this.setState({users, currentUser: users.filter((user) => user.id===this.state.currentUser.id)[0]})
+      }
+      this.setState({playedCard:false})
+    })
+  }
   socket = this.props.navigation.state.params.socket
 
 
@@ -100,7 +109,7 @@ class GameRoom extends Component {
   }
 
   openModal = async (image) => {
-    await this.setState({selectedCard: image, modalVisible:true})
+    if(!this.state.playedCard) await this.setState({selectedCard: image, modalVisible:true})
 	}
 	
 	closeModal() {
@@ -108,7 +117,6 @@ class GameRoom extends Component {
 	  }
   
   render() {
-    console.log('-------PLAYERID--------: ', this.state.currentUser && this.state.currentUser.playerId)
     const { isFontLoaded } =this.state;
     return (
       <View style={{height:'100%', flexDirection: 'column', justifyContent: 'space-between', alignItems:'center', backgroundColor: '#213F99'}}>
@@ -166,7 +174,7 @@ class GameRoom extends Component {
                     style={[styles.font,isFontLoaded && {fontFamily: 'Baloo-Regular'}]} 
                     onPress={() => {
                       this.props.playCardDispatch(this.state.currentUser.playerId, this.state.selectedCard)
-                      this.setState({selectedCard: ''})
+                      this.setState({selectedCard: '', playedCard: true})
                       this.socket.emit('endTurn', this.state.currentUser, 'test')
                       this.closeModal();
                     }}

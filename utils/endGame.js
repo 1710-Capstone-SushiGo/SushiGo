@@ -1,15 +1,15 @@
 const selectWinner = allUsers => {
-    newState = allUsers.slice();
-    newState.forEach(ele =>
-        ele.totalScore = ele.scores.reduce(
+    let newUsers = allUsers.slice();
+    newUsers.forEach(user =>
+        user.totalScore = user.scores.reduce(
             (a, b) => a + b));
-    newState.sort((a, b) => a - b).reverse();
-    for (let i = 0; i < newState.length; i++) {
-        newState[i].winner = true;
-        if (newState[i].totalScore > newState[i + 1].totalScore)
+    newUsers.sort((a, b) => b - a)
+    for (let i = 0; i < newUsers.length; i++) {
+        newUsers[i].winner = true;
+        if (newUsers[i+1] && newUsers[i].totalScore > newUsers[i + 1].totalScore)
             break;
     }
-    return newState;
+    return newUsers;
 }
 
 module.exports = selectWinner;

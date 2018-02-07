@@ -1,5 +1,8 @@
 const calculateAmount = (user) => {
-	return user.oneMakiRollAmount + user.twoMakiRollAmount * 2 + user.threeMakiRollAmount * 3
+	let oneMaki = user.keep.filter((card) => card === 'makiOne').length
+	let twoMaki = user.keep.filter((card) => card === 'makiTwo').length
+	let threeMaki = user.keep.filter((card) => card === 'makiThree').length
+	return oneMaki + twoMaki * 2 + threeMaki * 3
 }
 
 whoGetsMaki = (arrUserInfo) => {
@@ -14,13 +17,13 @@ whoGetsMaki = (arrUserInfo) => {
 		sortHigh[0].makiRollScore = 6
 		returnArray = sortHigh
 		sortNextHigh.map((user) => {
-			user.makiRollScore = 3 / sortNextHigh.length
+			user.makiRollScore = Math.floor(3 / sortNextHigh.length)
 			returnArray.push(user)
 		})
 	}
 	else {
 		sortHigh.map((user) => {
-			user.makiRollScore = 6 / sortHigh.length
+			user.makiRollScore = Math.floor(6 / sortHigh.length)
 			returnArray.push(user)
 		})
 	}

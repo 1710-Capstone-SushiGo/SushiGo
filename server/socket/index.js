@@ -1,4 +1,5 @@
-const generateHand = require('../../utils/gameLogic')
+const generateHand = require('../../utils/gameLogic').generateHand
+const updateUsersObject = require('../../utils/endRound')
 /*
 server will receive start game signal from creater
 server will send start game signal to other players with generated hands
@@ -12,12 +13,14 @@ module.exports = (io) => {
         socket.on('endTurn', (current, room) => {
             counter++;
             allUsers.push(current);
-            console.log(counter, allUsers)
             if (counter === 2) {
                 let newState = passHand(allUsers);
+                let updatedUsers
                 counter = 0;
                 allUsers = [];
-                io.in(room).emit('newUsersInfo', newState);
+                console.log(newState[0].hand.length)
+                if (newState[0].hand.length === 0) updatedUsers = updateUsersObject(newState)
+                io.in(room).emit('newUsersInfo', newState, updatedUsers);
             }
         })
 
@@ -35,17 +38,6 @@ module.exports = (io) => {
             io.in(room).emit('gameStart',startUsers)
         })
 
-        socket.on('endRound', () => {
-            socket.emit('refreshRound')
-        })
-
-        socket.on('endGame', () => {
-            socket.emit('endGameFlag', true)
-        })
-
-        socket.on('test', () => {
-            console.log('worked!')
-        })
         socket.on('disconnect', () => {
             console.log(`Connection ${socket.id} has left the building`)
         })

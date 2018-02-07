@@ -5,19 +5,19 @@ calculateWasabi = (arrayOfCards) => {
 		if (arrayOfCards[i] === 'wasabi') {
 			wasabiAmount++
 		}
-		else if (wasabiAmount > 0 && arrayOfCards[i] === 'eggNigiri') {
+		else if (wasabiAmount > 0 && arrayOfCards[i] === 'egg') {
 			score += 3
 			wasabiAmount--
 			arrayOfCards.splice(i, 1)
 			i--;
 		}
-		else if (wasabiAmount > 0 && arrayOfCards[i] === 'salmonNigiri') {
+		else if (wasabiAmount > 0 && arrayOfCards[i] === 'salmon') {
 			score += 6
 			wasabiAmount--
 			arrayOfCards.splice(i, 1)
 			i--;
 		}
-		else if (wasabiAmount > 0 && arrayOfCards[i] === 'squidNigiri') {
+		else if (wasabiAmount > 0 && arrayOfCards[i] === 'squid') {
 			score += 9
 			wasabiAmount--
 			arrayOfCards.splice(i, 1)	
