@@ -17,7 +17,7 @@ import tempura from '../../public/img/sushi/Tempura.png';
 import wasabi from '../../public/img/sushi/Wasabi.png';
 
 
-class Score extends Component {
+class RoundScore extends Component {
 
     static navigationOptions = {
         header: null
@@ -55,10 +55,7 @@ class Score extends Component {
         return(
            <View style={styles.container}>
             <View>
-                <Text style={{fontFamily: 'Baloo-Regular', fontSize: 35, color: 'white', top: '40%'}}>Final Score</Text>
-            </View>
-            <View style={styles.name}>
-                <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Rank</Text>
+                <Text style={{fontFamily: 'Baloo-Regular', fontSize: 40, color: 'white', top: '40%'}}>Round Score</Text>
             </View>
                <View style={styles.name}>
                 <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Name</Text>
@@ -97,34 +94,13 @@ class Score extends Component {
                         )
                     })}  
                </View> */}
-               <View style={styles.round}>
-                <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Rounds</Text>
-                {this.props.users && this.props.users.map(user=>{
-                    return(
-                        <View key={user.userId} style={{flexDirection: 'row'}}>
-                            {user.scores.map(score=>{
-                                idx++; 
-                                return (
-                                     <Text key={idx} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30, marginLeft: 7, marginRight: 7}}>{score}</Text>
-                                )
-                            })}
-                        </View>
-                    )
-                })}
-                
-               </View>
-               <View style={styles.score}>
-                    <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>pudding</Text>
-                    
-               </View>
-
                <View style={styles.score}>
                 <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Score</Text>
                     {this.props.users && this.props.users.map(user=>{
                         
                         return(
                             <View key={user.userId}>
-                                    <Text  style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.scores[0]+user.scores[1]+user.scores[2]}</Text>
+                                    <Text  style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.scores[0]}</Text>
                             </View>
                         )
                     })}
@@ -180,4 +156,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default connect(mapState)(Score);
+export default connect(mapState)(RoundScore);

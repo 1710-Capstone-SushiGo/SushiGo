@@ -7,6 +7,8 @@ import Lobby from './components/Lobby'
 import OnLoad from './components/OnLoad'
 import GameRoom from './components/GameRoom'
 import Score from './components/Score'
+import RoundScore from './components/RoundScore'
+import CardsView from './components/CardsView'
 import {Login} from './components/auth-form'
 
 export default RootNavigator = StackNavigator({
@@ -59,6 +61,18 @@ export default RootNavigator = StackNavigator({
     screen: Score,
     navigationOptions: {
       headerTitle: 'Score'
+    }
+  },
+  RoundScore: {
+    screen: RoundScore,
+    navigationOptions: {
+      headerTitle: 'RoundScore'
+    }
+  },
+  CardsView: {
+    screen: CardsView,
+    navigationOptions: {
+      headerTitle: 'CardsView'
     }
   }
 });
