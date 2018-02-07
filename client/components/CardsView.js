@@ -57,14 +57,13 @@ class CardsView extends Component {
         let idx = 0
         // console.log(this.props.users)
         return(
-         <ScrollView>
            <View style={styles.container}>
                <View style={styles.name}>
                 <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Name</Text>
                 {this.props.users && this.props.users.map(user=>{
                 
                     return(
-                        <Text key={user.username} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', marginTop: 30, marginBottom: 30}}>{user.username}</Text>
+                        <Text key={user.username} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', marginTop: 13, marginBottom: 13}}>{user.username}</Text>
                     )
                 })}
                </View>
@@ -77,7 +76,7 @@ class CardsView extends Component {
                             {user.keep.map(card=>{
                                 idx++
                                return(
-                                <Image key={idx} source={this.state.images[card]} style={{display: 'flex', height:75, width:40, margin: 10}}/>
+                                <Image key={idx} source={this.state.images[card]} style={{display: 'flex', height:50, width:26, margin: 8}}/>
                                ) 
                             })}
                             </View>
@@ -86,7 +85,6 @@ class CardsView extends Component {
                </View>
                
            </View> 
-        </ScrollView>
         )
     }
 
@@ -110,14 +108,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         width: '15%',
-        top: 48
+        top: 10
     },
     cards: {
         alignItems: 'center',
         flexDirection: 'column',
         width: '65%',
         height: 600,
-        top: 40
+        top: 10
     }
 })
 

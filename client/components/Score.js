@@ -4,17 +4,9 @@ import { StackNavigator } from 'react-navigation';
 import { playCard, getCurrentUser } from '../store';
 import {connect} from 'react-redux';
 import { Font } from 'expo';
-import userAvatar from '../../public/img/userAvatar.png';
-import chopsticks from '../../public/img/sushi/Chopsticks.png';
-import dumpling from '../../public/img/sushi/Dumpling.png';
-import egg from '../../public/img/sushi/EggNigiri.png';
-import maki from '../../public/img/sushi/Maki.png';
+
 import pudding from '../../public/img/sushi/Pudding.png';
-import salmon from '../../public/img/sushi/Salmon.png';
-import sashimi from '../../public/img/sushi/Sashimi.png';
-import squid from '../../public/img/sushi/SquidNigiri.png';
-import tempura from '../../public/img/sushi/Tempura.png';
-import wasabi from '../../public/img/sushi/Wasabi.png';
+
 
 
 class Score extends Component {
@@ -26,18 +18,6 @@ class Score extends Component {
      constructor(){
          super()
          this.state = {
-            images: {
-                chopsticks,
-                dumpling,
-                egg,
-                maki,
-                pudding,
-                salmon,
-                sashimi,
-                squid,
-                tempura,
-                wasabi
-              },
             isFontLoaded: false
          }
      }
@@ -51,21 +31,20 @@ class Score extends Component {
 
     render(){
         let idx = 0
-        console.log(this.props.users)
+        // console.log(this.props.users)
         return(
            <View style={styles.container}>
             <View>
-                <Text style={{fontFamily: 'Baloo-Regular', fontSize: 35, color: 'white', top: '40%'}}>Final Score</Text>
+                <Text style={{fontFamily: 'Baloo-Regular', fontSize: 33, color: 'white', top: '40%'}}>Final Score</Text>
             </View>
-            <View style={styles.name}>
+            {/* <View style={styles.name}>
                 <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Rank</Text>
-            </View>
+            </View> */}
                <View style={styles.name}>
                 <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Name</Text>
                 {this.props.users && this.props.users.map(user=>{
-                    idx++;
                     return(
-                        <Text key={idx} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.username}</Text>
+                        <Text key={user.username} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.username}</Text>
                     )
                 })}
                </View>
@@ -114,8 +93,16 @@ class Score extends Component {
                 
                </View>
                <View style={styles.score}>
-                    <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>pudding</Text>
-                    
+                    <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Pudding</Text>
+                    {/* <Image source={this.state.images[pudding]} style={{display: 'flex', height:40, width:40}}/> */}
+                    {this.props.users.map(user=>{
+                        return (
+                            <View key={user.username}  style={{flexDirection: 'row', top: 30}}>
+                                <Image key={user.username} source={pudding} style={{display: 'flex', height:30, width:30, top: 2}}/>
+                                <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white', marginLeft: 8}}>{user.puddingScore}</Text>
+                            </View>
+                        )
+                    })}
                </View>
 
                <View style={styles.score}>
@@ -123,8 +110,8 @@ class Score extends Component {
                     {this.props.users && this.props.users.map(user=>{
                         
                         return(
-                            <View key={user.userId}>
-                                    <Text  style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.score[0]+user.score[1]+user.score[2]}</Text>
+                            <View key={user.username}>
+                                <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.score[0]+user.score[1]+user.score[2]}</Text>
                             </View>
                         )
                     })}
@@ -152,8 +139,9 @@ const styles = StyleSheet.create({
     name: {
         alignItems: 'center',
         flexDirection: 'column',
-        width: '15%',
-        top: 40
+        width: '10%',
+        top: 40,
+        marginLeft: '6%'
     },
     // cards: {
     //     alignItems: 'center',
@@ -167,14 +155,14 @@ const styles = StyleSheet.create({
     round: {
         alignItems: 'center',
         flexDirection: 'column',
-        width: '22%',
+        width: '20%',
         top: 40
     },
     score: {
         // justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'column',
-        width: '15%',
+        width: '14%',
         top: 40
     }
 

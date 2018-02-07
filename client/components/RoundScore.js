@@ -5,16 +5,18 @@ import { playCard, getCurrentUser } from '../store';
 import {connect} from 'react-redux';
 import { Font } from 'expo';
 import userAvatar from '../../public/img/userAvatar.png';
-import chopsticks from '../../public/img/sushi/Chopsticks.png';
-import dumpling from '../../public/img/sushi/Dumpling.png';
-import egg from '../../public/img/sushi/EggNigiri.png';
-import maki from '../../public/img/sushi/Maki.png';
-import pudding from '../../public/img/sushi/Pudding.png';
-import salmon from '../../public/img/sushi/Salmon.png';
-import sashimi from '../../public/img/sushi/Sashimi.png';
-import squid from '../../public/img/sushi/SquidNigiri.png';
-import tempura from '../../public/img/sushi/Tempura.png';
-import wasabi from '../../public/img/sushi/Wasabi.png';
+import chopsticks from '../../public/img/cardViews/chopsticks.png';
+import dumpling from '../../public/img/cardViews/dumpling.png';
+import egg from '../../public/img/cardViews/egg.png';
+import makiOne from '../../public/img/cardViews/makiOne.png';
+import makiTwo from '../../public/img/cardViews/makiTwo.png';
+import makiThree from '../../public/img/cardViews/makiThree.png';
+import pudding from '../../public/img/cardViews/pudding.png';
+import salmon from '../../public/img/cardViews/salmon.png';
+import sashimi from '../../public/img/cardViews/sashimi.png';
+import squid from '../../public/img/cardViews/squid.png';
+import tempura from '../../public/img/cardViews/tempura.png';
+import wasabi from '../../public/img/cardViews/wasabi.png';
 
 
 class RoundScore extends Component {
@@ -30,7 +32,9 @@ class RoundScore extends Component {
                 chopsticks,
                 dumpling,
                 egg,
-                maki,
+                makiOne,
+                makiTwo,
+                makiThree,
                 pudding,
                 salmon,
                 sashimi,
@@ -55,14 +59,14 @@ class RoundScore extends Component {
         return(
            <View style={styles.container}>
             <View>
-                <Text style={{fontFamily: 'Baloo-Regular', fontSize: 40, color: 'white', top: '40%'}}>Round Score</Text>
+                <Text style={{fontFamily: 'Baloo-Regular', fontSize: 35 , color: 'white', top: '40%'}}>Round Score</Text>
             </View>
                <View style={styles.name}>
                 <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Name</Text>
                 {this.props.users && this.props.users.map(user=>{
                     idx++;
                     return(
-                        <Text key={user.username} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.username}</Text>
+                        <Text key={user.username} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', margin: 13}}>{user.username}</Text>
                     )
                 })}
                </View>
@@ -94,13 +98,28 @@ class RoundScore extends Component {
                         )
                     })}  
                </View> */}
+               <View style={styles.cards}>
+                    <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Cards</Text>
+                            {this.props.users && this.props.users.map(user=>{
+                                return(
+                                    <View key={user.username} style={{flexDirection: 'row'}}>
+                                    {user.keep.map(card=>{
+                                        idx++
+                                    return(
+                                        <Image key={idx} source={this.state.images[card]} style={{display: 'flex', height:50, width:26, margin: 8}}/>
+                                    ) 
+                                    })}
+                                    </View>
+                                )
+                            })}  
+               </View>
                <View style={styles.score}>
                 <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Score</Text>
                     {this.props.users && this.props.users.map(user=>{
                         
                         return(
                             <View key={user.userId}>
-                                    <Text key={user.username} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.score[0]}</Text>
+                                    <Text key={user.username} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', margin: 13}}>{user.score[0]}</Text>
                             </View>
                         )
                     })}
@@ -129,14 +148,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         width: '15%',
-        top: 40
+        top: 10
     },
-    // cards: {
-    //     alignItems: 'center',
-    //     flexDirection: 'column',
-    //     width: '40%',
-    //     top: 40
-    // },
+    cards: {
+        alignItems: 'center',
+        flexDirection: 'column',
+        width: '40%',
+        top: 10
+    },
     // pudding:{
 
     // }
@@ -144,14 +163,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         width: '22%',
-        top: 40
+        top: 10
     },
     score: {
         // justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'column',
         width: '15%',
-        top: 40
+        top: 10
     }
 
 })
