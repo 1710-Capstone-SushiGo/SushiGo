@@ -72,12 +72,15 @@ class GameRoom extends Component {
       },
       endGame: false,
       selectedCard: '',
-      modalVisible: false,
+      cardPreview: false,
       isFontLoaded: false,
       playedCard: false
     }
+    this.socket.on('endGame',(info) => {
+      console.log('GAME ENDED!')
+      // props.navigation.navigate('EndGame', info)
+    })
     this.socket.on('newUsersInfo',(users, updateNewRound) => {
-      console.log('-------UPDATE USERS', updateNewRound)
       if(updateNewRound) {
         this.setState({users: updateNewRound, currentUser: updateNewRound.filter((user) => user.id===this.state.currentUser.id)[0]})
         this.props.dispatchUsers({all:updateNewRound, currentUser: updateNewRound.filter((user) => user.id===this.state.currentUser.id)[0]})
@@ -97,6 +100,7 @@ class GameRoom extends Component {
     let params = this.props.navigation.state.params
     let current = params.users.filter((user) => user.id === params.userId)[0]
     await this.props.dispatchUsers({all:params.users, current})
+    current.numberOfPlayers = this.props.users.length
     this.setState({users:this.props.users, currentUser: this.props.currentUser})
     Font.loadAsync({'Baloo-Regular': require('../../assets/font/Baloo-Regular.ttf')})
     .then(()=>{
@@ -108,12 +112,12 @@ class GameRoom extends Component {
     await this.setState({selectedCard: image})
   }
 
-  openModal = async (image) => {
-    if(!this.state.playedCard) await this.setState({selectedCard: image, modalVisible:true})
+  cardPreviewOpen = async (image) => {
+    if(!this.state.playedCard) await this.setState({selectedCard: image, cardPreview:true})
 	}
 	
-	closeModal() {
-		this.setState({modalVisible:false});
+	cardPreviewClose() {
+		this.setState({cardPreview:false});
 	  }
   
   render() {
@@ -149,7 +153,7 @@ class GameRoom extends Component {
             idx++
             return (
               <View key={idx} style={{}}>
-                <TouchableOpacity style={{height:75, width:40, margin:5}} onPress={() => this.openModal(image)}>
+                <TouchableOpacity style={{height:75, width:40, margin:5}} onPress={() => this.cardPreviewOpen(image)}>
                   <Image source={this.state.images[image]} style={{height:75, width:40, margin:5}}/>
                 </TouchableOpacity>
               </View>
@@ -160,11 +164,11 @@ class GameRoom extends Component {
 
        <View style={styles.container}>
           <Modal
-              visible={this.state.modalVisible}
+              visible={this.state.cardPreview}
               supportedOrientations={['landscape']}
               transparent= {true}
               animationType={'fade'}
-              onRequestClose={() => this.closeModal()}
+              onRequestClose={() => this.cardPreviewClose()}
           >
             <View style={styles.modalContainer}>
               <View style={styles.innerContainer}>
@@ -176,7 +180,7 @@ class GameRoom extends Component {
                       this.props.playCardDispatch(this.state.currentUser.playerId, this.state.selectedCard)
                       this.setState({selectedCard: '', playedCard: true})
                       this.socket.emit('endTurn', this.state.currentUser, 'test')
-                      this.closeModal();
+                      this.cardPreviewClose();
                     }}
                   >
                   Play Card
@@ -184,7 +188,7 @@ class GameRoom extends Component {
                  <Text
                   style={[styles.fontTwo,isFontLoaded && {fontFamily: 'Baloo-Regular'}]} 
                     onPress={() => {
-                      this.closeModal()
+                      this.cardPreviewClose()
                     }}>
                     Go Back
                   </Text>

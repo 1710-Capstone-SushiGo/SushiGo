@@ -14,7 +14,8 @@ class Lobby extends Component {
     this.state = {
       users: []
     }
-    //http://172.16.23.137:3000http://192.168.1.30:3000
+    //http://172.16.23.137:3000
+    //http://192.168.1.30:3000
     this.socket = io('http://172.16.23.137:3000')
     this.socket.on('connect', () => this.socket.emit('room','test', props.navigation.state.params))
     if(props.navigation.state.params.creator) {

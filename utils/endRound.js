@@ -4,7 +4,6 @@ const generateHand = require('./gameLogic').generateHand
 
 const updateUsersObject = allUsers => {
     let copyUsers = allUsers.slice();
-    console.log('BEFORE MAKI', copyUsers)
     let score;
     let makiUser;
     let makiInfo = whoGetsMaki(copyUsers)

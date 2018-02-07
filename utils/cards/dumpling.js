@@ -1,4 +1,4 @@
-calculateDumpling = (amount) => {
+const calculateDumpling = (amount) => {
 	let scoring = {
 		'5': 15,
 		'4': 10,

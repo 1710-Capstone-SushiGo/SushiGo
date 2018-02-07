@@ -1,4 +1,4 @@
-calculateWasabi = (arrayOfCards) => {
+const calculateWasabi = (arrayOfCards) => {
 	let wasabiAmount = 0;
 	let score = 0;
 	for(let i = 0; i < arrayOfCards.length; i++) {

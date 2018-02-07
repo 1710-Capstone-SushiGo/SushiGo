@@ -1,5 +1,5 @@
 const calculateWasabi = require('./cards/wasabi')
-const calculateDumping = require('./cards/dumpling')
+const calculateDumpling = require('./cards/dumpling')
 const calculateSashimi = require('./cards/sashimi')
 const calculateTempura = require('./cards/tempura')
 const calculateEgg = require('./cards/nigiri').calculateEgg
@@ -62,12 +62,22 @@ function generateHand(users, deck){
     user.hand = deck.splice(0, numberCards)
     return user
   })
-  console.log(users)
   users = users.map((user) => {
     user.deck = deck
     return user
   })
   return users
+}
+function passHand(arrayOfUsers) {
+    arrayOfUsers = arrayOfUsers.sort((user1, user2) => { return user1.userId - user2.userId })
+    let temp = arrayOfUsers.map(elem => {
+      return elem.hand
+    })
+    for (var i = 0; i < temp.length - 1; i++) {
+      arrayOfUsers[i].hand = temp[(i + 1)]
+    }
+    arrayOfUsers[temp.length - 1].hand = temp[0]
+    return arrayOfUsers;
 }
 
 function calculateRoundScore(userKeep) {
@@ -86,5 +96,6 @@ function calculateRoundScore(userKeep) {
 
 module.exports ={
   generateHand,
+  passHand,
   calculateRoundScore
 }
