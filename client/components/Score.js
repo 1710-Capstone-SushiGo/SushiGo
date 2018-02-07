@@ -26,13 +26,94 @@ class Score extends Component {
      constructor(){
          super()
          this.state = {
-
+            images: {
+                chopsticks,
+                dumpling,
+                egg,
+                maki,
+                pudding,
+                salmon,
+                sashimi,
+                squid,
+                tempura,
+                wasabi
+              },
+            isFontLoaded: false
          }
      }
 
+    async componentDidMount() {
+        Font.loadAsync({'Baloo-Regular': require('../../assets/font/Baloo-Regular.ttf')})
+        .then(()=>{
+          this.setState({isFontLoaded: true})
+        })
+    } 
+
     render(){
+        let idx = 0
+        // console.log(this.props.users)
         return(
-           <View>Hello World</View> 
+           <View style={styles.container}>
+               <View style={styles.name}>
+                <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Name</Text>
+                {this.props.users && this.props.users.map(user=>{
+                    idx++;
+                    return(
+                        <Text key={idx} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.username}</Text>
+                    )
+                })}
+               </View>
+               <View style={styles.cards}>
+                <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Cards</Text>
+                    {this.props.users && this.props.users.map(user=>{
+                        return(
+                            <View key={user.userId} style={{flexDirection: 'row', top: 30}}>
+                            {user.keep.map(card=>{
+                                idx++
+                                return( 
+                                <View key={idx} style={{flexDirection: 'column'}}>
+                                <Image source={this.state.images[card]} style={{display: 'flex', height:40, width:40}}/>
+                                
+                                </View>
+                            )
+                            })}
+                            </View>
+                        )
+                    })}  
+               </View>
+               <View style={styles.round}>
+                <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Rounds</Text>
+                {this.props.users && this.props.users.map(user=>{
+                    return(
+                        <View key={user.userId} style={{flexDirection: 'row'}}>
+                            {user.scores.map(score=>{
+                                idx++;
+                                return (
+                                     <Text key={idx++} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30, marginLeft: 7, marginRight: 7}}>{score}</Text>
+                                )
+                            })}
+                        </View>
+                    )
+                })}
+                
+               </View>
+               <View style={styles.score}>
+                <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Score</Text>
+                    {this.props.users && this.props.users.map(user=>{
+                        
+                        return(
+                            <View key={user.userId}>
+                            {user.scores.reduce((pre,current,i)=>{
+                                idx++;
+                                return (
+                                    <Text  style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{pre+current}</Text>
+                                )
+                            })}
+                            </View>
+                        )
+                    })}
+               </View>
+           </View> 
         )
     }
 
@@ -44,5 +125,40 @@ const mapState = state => {
       currentUser: state.gameUser.current
     }
   }
+
+const styles = StyleSheet.create({
+    container: {
+        height:'100%', 
+        flexDirection: 'row',
+        justifyContent: 'center',
+        backgroundColor: '#262261'
+    },
+    name: {
+        alignItems: 'center',
+        flexDirection: 'column',
+        width: '12%',
+        top: 40
+    },
+    cards: {
+        alignItems: 'center',
+        flexDirection: 'column',
+        width: '40%',
+        top: 40
+    },
+    round: {
+        alignItems: 'center',
+        flexDirection: 'column',
+        width: '12%',
+        top: 40
+    },
+    score: {
+        // justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: 'column',
+        width: '15%',
+        top: 40
+    }
+
+})
 
 export default connect(mapState)(Score);

@@ -10,8 +10,8 @@ const PLAY_CARD = 'PLAY_CARD';
  */
 const defaultUser = {
   all: [
-    { username: 'Nick', userId: '2', socketId: '678', keep: ['wasabi'], hand: ['maki1', 'makiTwo'] },
-    { username: 'Jeff', userId: '1', socketId: '666', keep: ['sashimi'], hand: ['chopsticks', 'tempura', 'makiOne', 'sashimi', 'sashimi', 'wasabi'] }
+    { username: 'Nick', userId: '2', socketId: '678', keep: ['wasabi','makiOne', 'makiTwo', 'tempura'], hand: ['makiOne', 'makiTwo', 'tempura', 'makiOne', 'sashimi'], scores:[10,23] },
+    { username: 'Jeff', userId: '1', socketId: '666', keep: ['sashimi','chopsticks', 'tempura', 'makiOne', 'sashimi'], hand: ['chopsticks', 'tempura', 'makiOne', 'sashimi', 'sashimi', 'wasabi'], scores:[21,4] }
   ],
   current: {}
 };

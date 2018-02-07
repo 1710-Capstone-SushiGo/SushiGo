@@ -55,7 +55,7 @@ export default RootNavigator = StackNavigator({
       headerTitle: 'Login'
     }
   },
-  Socre: {
+  Score: {
     screen: Score,
     navigationOptions: {
       headerTitle: 'Score'

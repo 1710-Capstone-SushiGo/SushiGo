@@ -36,7 +36,7 @@ class AuthForm extends React.Component {
   render() {
     const {name, displayName, handleSubmit, error} = this.props
     //passes user as: this.props.navigation.state.params
-    if(this.props.user.id) this.props.navigation.navigate('StartMenu', this.props.user)
+    if(this.props.user.id) this.props.navigation.navigate('Login', this.props.user)
     return (
       <View style={styles.container}>
         <View style={styles.form}>

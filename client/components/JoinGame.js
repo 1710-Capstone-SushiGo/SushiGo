@@ -23,12 +23,12 @@ constructor(props){
              <View style={{flexDirection:'row'}}>
                 <Text style={{fontSize: 46}}
                     onPress={() => {
-                        this.props.navigation.navigate('StartMenu')
+                        this.props.navigation.navigate('StartMenu' , this.props.navigation.state.params)
                     }}
                 >👈🏻</Text>
                 <Text style={{fontSize: 46}}
                     onPress={() => {
-                        this.props.navigation.navigate('CreatGame')
+                        this.props.navigation.navigate('CreateGame' , this.props.navigation.state.params)
                     }}
                 >👉🏻</Text>
             </View>

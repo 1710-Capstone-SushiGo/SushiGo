@@ -61,7 +61,7 @@ export default class OnLoad extends React.Component {
         return (
             <Provider store = {store}>
             <View style={styles.container}
-                onResponderGrant={() => this.props.navigation.navigate('Login')}
+                onResponderGrant={() => this.props.navigation.navigate('StartMenu')}
                 onStartShouldSetResponder={(e) => { return true }}
             >
                 {/* <Text style={{ fontSize: 40, color: '#841584' }}>Sushi GO!</Text> */}
