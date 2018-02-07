@@ -1,9 +1,11 @@
-let nigiri = {};
+const calculateEgg = (amount) => {return amount * 1};
 
-nigiri.calculateEgg = (amount) => {return amount * 1};
+const calculateSalmon = (amount) => {return amount * 2};
 
-nigiri.calculateSalmon = (amount) => {return amount * 2};
+const calculateSquid = (amount) => {return amount * 3};
 
-nigiri.calculateSquid = (amount) => {return amount * 3};
-
-module.exports = nigiri
+module.exports = {
+	calculateEgg,
+	calculateSquid,
+	calculateSalmon
+}

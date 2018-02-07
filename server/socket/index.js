@@ -1,23 +1,25 @@
-/*
-server will receive new players joining lobby
-server will emit new players that join lobby
-server will receive start game signal from creater
-server will send start game signal to other players
-*/
+const generateHand = require('../../utils/gameLogic').generateHand
+const passHand = require('../../utils/gameLogic').passHand
+const updateUsersObject = require('../../utils/endRound')
+const updateForEndGame = require('../../utils/endGame')
+
 module.exports = (io) => {
+    let counter = 0;
+    let allUsers = [];
     io.on('connection', (socket) => {
         console.log(`A socket connection to the server has been made: ${socket.id}`)
         
-        let counter = 0;
-        let allUsers = [{ username: 'Nick', userId: '2', socketId: '678', keep: ['wasabi'], hand: ['makiOne', 'makiTwo'] }];
-        socket.on('endTurn', current => {
+        socket.on('endTurn', (current, room) => {
             counter++;
             allUsers.push(current);
-            if (counter === 1) {
+            if (counter === current.numberOfPlayers) {
                 let newState = passHand(allUsers);
+                let updatedUsers
                 counter = 0;
                 allUsers = [];
-                socket.emit('newUsersInfo', newState);
+                if (newState[0].hand.length === 0) updatedUsers = updateUsersObject(newState)
+                if (updatedUsers && updatedUsers[0] && updatedUsers[0].score.length === 3) io.in(room).emit('endGame',updateForEndGame(updatedUsers))
+                else io.in(room).emit('newUsersInfo', newState, updatedUsers);
             }
         })
 
@@ -30,12 +32,9 @@ module.exports = (io) => {
             socket.in(room).emit('newUsers', users)
         })
 
-        socket.on('endRound', () => {
-            socket.emit('refreshRound')
-        })
-
-        socket.on('endGame', () => {
-            socket.emit('endGameFlag', true)
+        socket.on('readyStart', (room, users) => {
+            startUsers = generateHand(users)
+            io.in(room).emit('gameStart',startUsers)
         })
 
         socket.on('disconnect', () => {
@@ -43,15 +42,3 @@ module.exports = (io) => {
         })
     })
 }
-
-const passHand = (arrayOfUsers) => {
-    arrayOfUsers = arrayOfUsers.sort((user1, user2) => { return user1.userId - user2.userId })
-    let temp = arrayOfUsers.map(elem => {
-      return elem.hand
-    })
-    for (var i = 0; i < temp.length - 1; i++) {
-      arrayOfUsers[i].hand = temp[(i + 1)]
-    }
-    arrayOfUsers[temp.length - 1].hand = temp[0]
-    return arrayOfUsers;
-  }

@@ -8,7 +8,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 const reducer = combineReducers({gameUser, user});
 const middleware = composeWithDevTools(applyMiddleware(
 	thunkMiddleware,
-	createLogger({collapsed: true})
+	// createLogger({collapsed: true})
 ))
 
 const store = createStore(reducer, middleware);

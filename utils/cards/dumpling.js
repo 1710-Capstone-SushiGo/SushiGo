@@ -1,20 +1,13 @@
-let dumpling = {}
-
-dumpling.calculateDumpling = (amount) => {
-	switch(amount) {
-		case 5:
-			return 15;
-		case 4:
-			return 10;
-		case 3:
-			return 6;
-		case 2:
-			return 3;
-		case 1:
-			return 1;
-		default:
-			return 0;
+const calculateDumpling = (amount) => {
+	let scoring = {
+		'5': 15,
+		'4': 10,
+		'3': 6,
+		'2': 3,
+		'1': 1,
+		'0': 0
 	}
+	return amount <= 5 ? scoring[amount] : scoring[5]
 }
 
-module.exports = dumpling
+module.exports = calculateDumpling
