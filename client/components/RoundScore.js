@@ -62,7 +62,7 @@ class RoundScore extends Component {
                 {this.props.users && this.props.users.map(user=>{
                     idx++;
                     return(
-                        <Text key={idx} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.username}</Text>
+                        <Text key={user.username} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.username}</Text>
                     )
                 })}
                </View>
@@ -100,7 +100,7 @@ class RoundScore extends Component {
                         
                         return(
                             <View key={user.userId}>
-                                    <Text  style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.scores[0]}</Text>
+                                    <Text key={user.username} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.score[0]}</Text>
                             </View>
                         )
                     })}

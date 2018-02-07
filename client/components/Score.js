@@ -102,7 +102,7 @@ class Score extends Component {
                 {this.props.users && this.props.users.map(user=>{
                     return(
                         <View key={user.userId} style={{flexDirection: 'row'}}>
-                            {user.scores.map(score=>{
+                            {user.score.map(score=>{
                                 idx++; 
                                 return (
                                      <Text key={idx} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30, marginLeft: 7, marginRight: 7}}>{score}</Text>
@@ -124,7 +124,7 @@ class Score extends Component {
                         
                         return(
                             <View key={user.userId}>
-                                    <Text  style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.scores[0]+user.scores[1]+user.scores[2]}</Text>
+                                    <Text  style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', top: 30}}>{user.score[0]+user.score[1]+user.score[2]}</Text>
                             </View>
                         )
                     })}

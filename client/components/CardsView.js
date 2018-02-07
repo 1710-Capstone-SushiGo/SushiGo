@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, Button, View, PanResponder, Animated, TouchableOpacity, Image, Modal } from 'react-native';
+import { StyleSheet, Text, Button, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { playCard, getCurrentUser } from '../store';
 import {connect} from 'react-redux';
@@ -55,15 +55,16 @@ class CardsView extends Component {
 
     render(){
         let idx = 0
-        console.log(this.props.users)
+        // console.log(this.props.users)
         return(
+         <ScrollView>
            <View style={styles.container}>
                <View style={styles.name}>
                 <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Name</Text>
                 {this.props.users && this.props.users.map(user=>{
-                    idx++;
+                
                     return(
-                        <Text key={idx} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', margin: 35}}>{user.username}</Text>
+                        <Text key={user.username} style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: '#FFDD17', marginTop: 30, marginBottom: 30}}>{user.username}</Text>
                     )
                 })}
                </View>
@@ -72,11 +73,11 @@ class CardsView extends Component {
                 <Text style={{fontFamily: 'Baloo-Regular', fontSize: 25, color: 'white'}}>Cards</Text>
                     {this.props.users && this.props.users.map(user=>{
                         return(
-                            <View key={user.userId} style={{flexDirection: 'row'}}>
+                            <View key={user.username} style={{flexDirection: 'row'}}>
                             {user.keep.map(card=>{
                                 idx++
                                return(
-                                <Image key={idx} source={this.state.images[card]} style={{display: 'flex', height:81, width:45,margin: 15}}/>
+                                <Image key={idx} source={this.state.images[card]} style={{display: 'flex', height:75, width:40, margin: 10}}/>
                                ) 
                             })}
                             </View>
@@ -85,6 +86,7 @@ class CardsView extends Component {
                </View>
                
            </View> 
+        </ScrollView>
         )
     }
 
@@ -114,6 +116,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         width: '65%',
+        height: 600,
         top: 40
     }
 })

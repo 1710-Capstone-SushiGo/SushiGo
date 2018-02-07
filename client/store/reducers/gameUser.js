@@ -11,7 +11,10 @@ const PLAY_CARD = 'PLAY_CARD';
 const defaultUser = {
   all: [
     { username: 'Nick', userId: '2', socketId: '678', keep: ['wasabi','makiOne', 'makiTwo', 'tempura', 'makiOne', 'makiTwo'], hand: ['makiOne', 'makiTwo', 'tempura', 'makiOne', 'sashimi'],puddingScore: 2, score:[10, 23, 13] },
-    { username: 'Jeff', userId: '1', socketId: '666', keep: ['sashimi','chopsticks', 'tempura', 'makiOne', 'sashimi','chopsticks'], hand: ['chopsticks', 'tempura', 'makiOne', 'sashimi', 'sashimi', 'wasabi'], puddingScore: 4, score:[21, 4, 11] }
+    { username: 'Jeff', userId: '1', socketId: '666', keep: ['sashimi','chopsticks', 'tempura', 'makiOne', 'sashimi','chopsticks'], hand: ['chopsticks', 'tempura', 'makiOne', 'sashimi', 'sashimi', 'wasabi'], puddingScore: 4, score:[21, 4, 11] },
+    { username: 'Will', userId: '1', socketId: '666', keep: ['sashimi','chopsticks', 'tempura', 'makiOne', 'sashimi','chopsticks'], hand: ['chopsticks', 'tempura', 'makiOne', 'sashimi', 'sashimi', 'wasabi'], puddingScore: 4, score:[21, 4, 11] },
+    { username: 'Jim', userId: '1', socketId: '666', keep: ['sashimi','chopsticks', 'tempura', 'makiOne', 'sashimi','chopsticks'], hand: ['chopsticks', 'tempura', 'makiOne', 'sashimi', 'sashimi', 'wasabi'], puddingScore: 4, score:[21, 4, 11] },
+    { username: 'Jack', userId: '1', socketId: '666', keep: ['sashimi','chopsticks', 'tempura', 'makiOne', 'sashimi','chopsticks'], hand: ['chopsticks', 'tempura', 'makiOne', 'sashimi', 'sashimi', 'wasabi'], puddingScore: 4, score:[21, 4, 11] }
   ],
   current: {}
 };
