@@ -39,17 +39,21 @@ function shuffle(deck) {
   return deck;
 }
 
-function generateHand(users, deck){
+module.exports = function generateHand(users, deck){
   if (!deck) deck = defaultDeck
   var deck = shuffle(deck)
   var numberPeople = users.length;
   var numberCards = cardsToDeal[numberPeople];
   var playerIdArray = generatePlayerId(numberPeople)
   users = users.map((user) => {
-    if(!user.playerId) user.playerId = playerIdArray.splice(0,1)
+    if(!user.playerId) user.playerId = playerIdArray.splice(0,1)[0]
     if(!user.keep) user.keep = []
     if(!user.score) user.score = []
     user.hand = deck.splice(0, numberCards)
+    return user
+  })
+  users = users.map((user) => {
+    user.deck = deck
     return user
   })
   return users

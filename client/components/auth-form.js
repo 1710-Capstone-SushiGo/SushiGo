@@ -14,8 +14,8 @@ import { Font } from 'expo'
 class AuthForm extends React.Component {
 
   static navigationOptions = {
-    header: null
- }
+      header: null
+   }
 
   constructor(props) {
     super(props)
@@ -90,8 +90,8 @@ const mapDispatch = (dispatch) => {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
+  container: {
+    flex: 1,
     justifyContent: 'center',
     backgroundColor: '#213F99'
     },

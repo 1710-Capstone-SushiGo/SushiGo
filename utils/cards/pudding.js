@@ -1,6 +1,4 @@
-let pudding = {};
-
-pudding.whoGetsPoints = (arrUserInfo) => {
+whoGetsPudding = (arrUserInfo) => {
 	let sortedUserInfo = arrUserInfo.sort(function(user1, user2) {
 		return user2.pudding - user1.pudding;
 	})
@@ -19,4 +17,4 @@ pudding.whoGetsPoints = (arrUserInfo) => {
 }
 
 
-module.exports = pudding
+module.exports = whoGetsPudding

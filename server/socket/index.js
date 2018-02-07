@@ -1,23 +1,23 @@
+const generateHand = require('../../utils/gameLogic')
 /*
-server will receive new players joining lobby
-server will emit new players that join lobby
 server will receive start game signal from creater
-server will send start game signal to other players
+server will send start game signal to other players with generated hands
 */
 module.exports = (io) => {
+    let counter = 0;
+    let allUsers = [];
     io.on('connection', (socket) => {
         console.log(`A socket connection to the server has been made: ${socket.id}`)
         
-        let counter = 0;
-        let allUsers = [{ username: 'Nick', userId: '2', socketId: '678', keep: ['wasabi'], hand: ['makiOne', 'makiTwo'] }];
-        socket.on('endTurn', current => {
+        socket.on('endTurn', (current, room) => {
             counter++;
             allUsers.push(current);
-            if (counter === 1) {
+            console.log(counter, allUsers)
+            if (counter === 2) {
                 let newState = passHand(allUsers);
                 counter = 0;
                 allUsers = [];
-                socket.emit('newUsersInfo', newState);
+                io.in(room).emit('newUsersInfo', newState);
             }
         })
 
@@ -30,6 +30,11 @@ module.exports = (io) => {
             socket.in(room).emit('newUsers', users)
         })
 
+        socket.on('readyStart', (room, users) => {
+            startUsers = generateHand(users)
+            io.in(room).emit('gameStart',startUsers)
+        })
+
         socket.on('endRound', () => {
             socket.emit('refreshRound')
         })
@@ -38,6 +43,9 @@ module.exports = (io) => {
             socket.emit('endGameFlag', true)
         })
 
+        socket.on('test', () => {
+            console.log('worked!')
+        })
         socket.on('disconnect', () => {
             console.log(`Connection ${socket.id} has left the building`)
         })
