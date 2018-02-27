@@ -5,5 +5,3 @@ It is a multiplayer mobile game that replicates the board game Sushi Go. User ca
 
 Developed using react-native, express, and socket.io.
 
-Link to SushiGov -> www.....com
-
